@@ -29,7 +29,7 @@ export default [
       'no-var': 'error',
 
       // Báo lỗi biến hoặc tham số không sử dụng
-      'no-unused-vars': ['error'],
+      'no-unused-vars': ['error', { argsIgnorePattern: '^_' }],
 
       // Bắt buộc dùng dấu chấm phẩy
       semi: ['error', 'always'],

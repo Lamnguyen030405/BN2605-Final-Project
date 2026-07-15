@@ -27,7 +27,7 @@ app.engine(
       },
     },
     extname: '.hbs', // Đặt đuôi file giao diện là .hbs thay vì .handlebars
-  })
+  }),
 );
 
 // 2. Báo cho Express biết hãy dùng Handlebars làm công cụ render giao diện
@@ -40,8 +40,6 @@ app.use(appRouters); // Kích hoạt router chính cho toàn bộ ứng dụng
 
 // THỦ THUẬT: Đặt Error Handler ở cuối cùng file
 app.use((err, req, res, _next) => {
-  console.error('🔥 PHÁT HIỆN LỖI:', err.message);
-
   // Ghi lỗi ra file log, gửi cảnh báo qua Telegram cho team... (Logic mở rộng)
 
   // Trả thông báo lịch sự cho người dùng
@@ -59,4 +57,4 @@ app.use((req, res) => {
 
 connectDB(); // Kết nối tới MongoDB Atlas trước khi khởi động server
 
-app.listen(3000, () => console.log('Server is running...'));
+app.listen(3000);
