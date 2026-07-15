@@ -39,7 +39,7 @@ app.set('views', './src/views');
 app.use(appRouters); // Kích hoạt router chính cho toàn bộ ứng dụng
 
 // THỦ THUẬT: Đặt Error Handler ở cuối cùng file
-app.use((err, req, res, next) => {
+app.use((err, req, res, _next) => {
   console.error('🔥 PHÁT HIỆN LỖI:', err.message);
 
   // Ghi lỗi ra file log, gửi cảnh báo qua Telegram cho team... (Logic mở rộng)
