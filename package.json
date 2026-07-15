@@ -4,7 +4,7 @@
     "watch-scss": "sass --watch src/scss/app.scss public/css/style.css",
     "lint": "eslint .",
     "format": "prettier --write \"src/**/*.js\"",
-    "test": "jest"
+    "test": "jest --passWithNoTests"
   },
   "dependencies": {
     "dotenv": "^17.4.2",
