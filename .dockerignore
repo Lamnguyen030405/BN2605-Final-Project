@@ -1,0 +1,14 @@
+node_modules
+Dockerfile
+.dockerignore
+build/
+dist/
+out/
+.cache/
+*.log
+.git
+.gitignore
+README.md
+.env
+.vscode/
+.npmrc

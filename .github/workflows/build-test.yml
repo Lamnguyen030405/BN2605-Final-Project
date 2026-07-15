@@ -1,0 +1,30 @@
+name: Build and Test project
+
+on:
+  # push:
+  #   branches: ['main']
+  pull_request:
+    branches: ['main']
+
+jobs:
+  build-and-test:
+    name: Run Tests and Linters
+    runs-on: ubuntu-latest # cấp phát 1 ubuntu version latest để chạy job
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Use Node.js 24
+        uses: actions/setup-node@v4
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Check eslint
+        run: npm run lint
+
+      - name: Run tests
+        run: npm run test
+        # Check if status of step check eslint is success or not, if success continue to run tests, if not fail the job
+        if: ${{ success() }}
