@@ -44,6 +44,17 @@ const propertySchema = new mongoose.Schema(
     review_count: { type: Number, default: 0 },
     is_active: { type: Boolean, default: true },
     amenities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amenity' }],
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
     images: [imageSchema],
   },
   {

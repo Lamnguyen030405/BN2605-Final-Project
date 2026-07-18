@@ -8,6 +8,17 @@ const locationSchema = new mongoose.Schema(
     country: { type: String, default: 'Vietnam' },
     latitude: { type: Number },
     longitude: { type: Number },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     versionKey: false,

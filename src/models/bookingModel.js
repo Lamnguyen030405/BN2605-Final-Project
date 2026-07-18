@@ -95,6 +95,17 @@ const bookingSchema = new mongoose.Schema(
     special_requests: { type: String },
     cancelled_at: { type: Date },
     cancel_reason: { type: String },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
 
     // Subdocuments nhúng vào Booking
     rooms: [bookingRoomSchema],

@@ -5,6 +5,7 @@ import path from 'path';
 import appRouters from './routes/index.js';
 import methodOverride from 'method-override';
 import connectDB from './config/database.js';
+import 'dotenv/config';
 
 const app = express();
 
@@ -57,4 +58,8 @@ app.use((req, res) => {
 
 connectDB(); // Kết nối tới MongoDB Atlas trước khi khởi động server
 
-app.listen(3000);
+const port = process.env.PORT || 3000;
+
+app.listen(port, () => {
+  console.log(`Server is running on port ${port}`);
+});

@@ -15,6 +15,17 @@ const roomSchema = new mongoose.Schema(
     bed_type: { type: String },
     floor: { type: Number },
     is_available: { type: Boolean, default: true },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     versionKey: false,

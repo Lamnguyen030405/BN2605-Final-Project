@@ -13,6 +13,17 @@ const ticketSchema = new mongoose.Schema(
     quota_per_day: { type: Number },
     valid_days: { type: Number, default: 1 },
     is_active: { type: Boolean, default: true },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     versionKey: false,

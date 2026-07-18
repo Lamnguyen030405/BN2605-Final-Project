@@ -35,6 +35,17 @@ const reviewSchema = new mongoose.Schema(
       content: { type: String },
       replied_at: { type: Date, default: Date.now },
     },
+    isDeleted: {
+      type: Boolean,
+      default: false,
+    },
+    deletedAt: {
+      type: Date,
+    },
+    deletedBy: {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'User',
+    },
   },
   {
     timestamps: {
