@@ -27,7 +27,7 @@ app.engine(
       },
     },
     extname: '.hbs', // Đặt đuôi file giao diện là .hbs thay vì .handlebars
-  }),
+  })
 );
 
 // 2. Báo cho Express biết hãy dùng Handlebars làm công cụ render giao diện
