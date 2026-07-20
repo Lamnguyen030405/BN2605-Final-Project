@@ -77,4 +77,66 @@ const updatePassword = async (req, res) => {
   }
 };
 
-export { getProfile, updateProfile, updatePassword };
+const getAllUsers = async (req, res) => {
+  try {
+    const users = await User.find({ isDeleted: false })
+      .select('-password -deletedAt -isDeleted')
+      .populate('role', 'name description')
+      .lean();
+
+    return sendResponse(res, 200, users, true);
+  } catch (error) {
+    return sendResponse(res, 500, null, false, [error.message]);
+  }
+};
+
+const toggleUserStatus = async (req, res) => {
+  try {
+    const { id } = req.params;
+    const { isActive } = req.body;
+
+    const user = await User.findById(id);
+    if (!user || user.isDeleted) {
+      return sendResponse(res, 404, null, false, ['Không tìm thấy người dùng']);
+    }
+
+    // Không cho phép admin tự khóa tài khoản của chính mình
+    if (user._id.toString() === req.user.id) {
+      return sendResponse(res, 400, null, false, ['Không thể tự khóa tài khoản của chính mình']);
+    }
+
+    user.isActive = isActive;
+    await user.save();
+
+    const action = isActive ? 'Mở khóa' : 'Khóa';
+    return sendResponse(res, 200, null, true, [`${action} tài khoản thành công`]);
+  } catch (error) {
+    return sendResponse(res, 500, null, false, [error.message]);
+  }
+};
+
+const deleteUser = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    const user = await User.findById(id);
+    if (!user || user.isDeleted) {
+      return sendResponse(res, 404, null, false, ['Không tìm thấy người dùng']);
+    }
+
+    if (user._id.toString() === req.user.id) {
+      return sendResponse(res, 400, null, false, ['Không thể tự xóa tài khoản của chính mình']);
+    }
+
+    user.isDeleted = true;
+    user.deletedAt = new Date();
+    user.deletedBy = req.user.id;
+    await user.save();
+
+    return sendResponse(res, 200, null, true, ['Xóa tài khoản thành công']);
+  } catch (error) {
+    return sendResponse(res, 500, null, false, [error.message]);
+  }
+};
+
+export { getProfile, updateProfile, updatePassword, getAllUsers, toggleUserStatus, deleteUser };

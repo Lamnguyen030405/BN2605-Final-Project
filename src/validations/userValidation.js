@@ -40,4 +40,30 @@ const updatePasswordSchema = {
   }),
 };
 
-export { updateProfileSchema, updatePasswordSchema };
+const statusSchema = {
+  params: Joi.object({
+    id: Joi.string().hex().length(24).required().messages({
+      'string.hex': 'ID người dùng không hợp lệ',
+      'string.length': 'ID người dùng không hợp lệ',
+      'any.required': 'Vui lòng cung cấp ID người dùng',
+    }),
+  }),
+  body: Joi.object({
+    isActive: Joi.boolean().required().messages({
+      'boolean.base': 'Trạng thái isActive phải là true hoặc false',
+      'any.required': 'Vui lòng cung cấp trạng thái isActive',
+    }),
+  }),
+};
+
+const deleteSchema = {
+  params: Joi.object({
+    id: Joi.string().hex().length(24).required().messages({
+      'string.hex': 'ID người dùng không hợp lệ',
+      'string.length': 'ID người dùng không hợp lệ',
+      'any.required': 'Vui lòng cung cấp ID người dùng',
+    }),
+  }),
+};
+
+export { updateProfileSchema, updatePasswordSchema, statusSchema, deleteSchema };

@@ -21,7 +21,7 @@ const locationSchema = new mongoose.Schema(
     },
   },
   {
-    versionKey: false,
+    versionKey: false
   }
 );
 
