@@ -6,7 +6,7 @@ import {
   updateProfileSchema,
   updatePasswordSchema,
   statusSchema,
-  deleteSchema
+  deleteSchema,
 } from '../validations/userValidation.js';
 import {
   getProfile,
@@ -14,7 +14,7 @@ import {
   updatePassword,
   getAllUsers,
   toggleUserStatus,
-  deleteUser
+  deleteUser,
 } from '../controllers/userController.js';
 
 const router = Router();
@@ -27,7 +27,12 @@ router.use(verifyToken);
 router.get('/me', getProfile);
 
 // Đã gộp chức năng upload avatar bằng form-data vào chung với cập nhật profile
-router.put('/me', uploadAvatar('avatar'), validate(updateProfileSchema), updateProfile);
+router.put(
+  '/me',
+  uploadAvatar('avatar'),
+  validate(updateProfileSchema),
+  updateProfile,
+);
 
 router.put('/me/password', validate(updatePasswordSchema), updatePassword);
 

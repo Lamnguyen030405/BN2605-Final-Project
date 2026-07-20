@@ -29,7 +29,7 @@ const roomSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-  }
+  },
 );
 
 export const Room = mongoose.model('Room', roomSchema);

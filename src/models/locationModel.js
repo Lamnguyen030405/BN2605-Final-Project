@@ -21,8 +21,8 @@ const locationSchema = new mongoose.Schema(
     },
   },
   {
-    versionKey: false
-  }
+    versionKey: false,
+  },
 );
 
 export const Location = mongoose.model('Location', locationSchema);

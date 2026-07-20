@@ -11,7 +11,7 @@ const register = async (
   email,
   phone,
   password,
-  role = 'customer'
+  role = 'customer',
 ) => {
   try {
     // Normalize input
@@ -69,6 +69,7 @@ const register = async (
       data: { email },
     };
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -104,7 +105,7 @@ const verifyOtp = async (email, otpCode) => {
       pendingData.email,
       pendingData.phone,
       pendingData.password,
-      pendingData.role
+      pendingData.role,
     );
 
     if (user && user.status) {
@@ -119,6 +120,7 @@ const verifyOtp = async (email, otpCode) => {
       data: user,
     };
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -188,6 +190,7 @@ const login = async (identifier, password) => {
       },
     };
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };
@@ -268,6 +271,7 @@ const refreshToken = async (token) => {
       },
     };
   } catch (error) {
+    console.error(error);
     throw error;
   }
 };

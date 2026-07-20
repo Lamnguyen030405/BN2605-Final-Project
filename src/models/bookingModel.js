@@ -10,7 +10,7 @@ const bookingRoomSchema = new mongoose.Schema(
     price_snapshot: { type: Number, required: true },
     nights: { type: Number, default: 1 },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const bookingTicketSchema = new mongoose.Schema(
@@ -24,7 +24,7 @@ const bookingTicketSchema = new mongoose.Schema(
     quantity: { type: Number, default: 1 },
     price_snapshot: { type: Number, required: true },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const paymentSchema = new mongoose.Schema(
@@ -54,7 +54,7 @@ const paymentSchema = new mongoose.Schema(
     refund_amount: { type: Number },
     note: { type: String },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const bookingSchema = new mongoose.Schema(
@@ -118,7 +118,7 @@ const bookingSchema = new mongoose.Schema(
       updatedAt: 'updated_at',
     },
     versionKey: false,
-  }
+  },
 );
 
 export const Booking = mongoose.model('Booking', bookingSchema);

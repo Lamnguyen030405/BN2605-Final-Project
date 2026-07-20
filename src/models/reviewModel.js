@@ -53,7 +53,7 @@ const reviewSchema = new mongoose.Schema(
       updatedAt: false,
     },
     versionKey: false,
-  }
+  },
 );
 
 export const Review = mongoose.model('Review', reviewSchema);

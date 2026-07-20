@@ -61,7 +61,7 @@ const userSchema = new mongoose.Schema(
       updatedAt: 'updated_at',
     },
     versionKey: false,
-  }
+  },
 );
 
 export const User = mongoose.model('User', userSchema);

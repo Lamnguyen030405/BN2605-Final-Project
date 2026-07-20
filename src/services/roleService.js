@@ -20,7 +20,7 @@ const createRole = async ({ name, description }) => {
 
 const getRoleByName = async (name) => {
   return mongooseToObject(
-    await Role.findOne({ name, isDeleted: false }).lean()
+    await Role.findOne({ name, isDeleted: false }).lean(),
   );
 };
 
@@ -32,7 +32,7 @@ const updateRole = async (id, updates) => {
   return mongooseToObject(
     await Role.findOneAndUpdate({ _id: id, isDeleted: false }, updates, {
       new: true,
-    })
+    }),
   );
 };
 
@@ -41,8 +41,8 @@ const deleteRole = async (id, deletedBy) => {
     await Role.findByIdAndUpdate(
       id,
       { isDeleted: true, deletedAt: new Date(), deletedBy },
-      { new: true }
-    )
+      { new: true },
+    ),
   );
 };
 

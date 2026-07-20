@@ -26,7 +26,7 @@ const refreshTokenSchema = new mongoose.Schema(
       updatedAt: false,
     },
     versionKey: false,
-  }
+  },
 );
 
 refreshTokenSchema.index({ expires_at: 1 }, { expireAfterSeconds: 0 });

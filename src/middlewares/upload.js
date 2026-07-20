@@ -22,7 +22,12 @@ const createUploader = (folderName) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
     } else {
-      cb(new Error('Chỉ cho phép tải lên các định dạng hình ảnh (jpg, png, webp)'), false);
+      cb(
+        new Error(
+          'Chỉ cho phép tải lên các định dạng hình ảnh (jpg, png, webp)',
+        ),
+        false,
+      );
     }
   };
 
@@ -42,13 +47,20 @@ const createUploader = (folderName) => {
       if (err instanceof multer.MulterError) {
         // Bắt lỗi kích thước file từ Multer
         if (err.code === 'LIMIT_FILE_SIZE') {
-          return sendResponse(res, 400, null, false, ['Kích thước ảnh quá lớn, tối đa cho phép là 5MB']);
+          return sendResponse(res, 400, null, false, [
+            'Kích thước ảnh quá lớn, tối đa cho phép là 5MB',
+          ]);
         }
-        return sendResponse(res, 400, null, false, [err.message || 'Lỗi xử lý file từ Multer']);
+        return sendResponse(res, 400, null, false, [
+          err.message || 'Lỗi xử lý file từ Multer',
+        ]);
       } else if (err) {
         // Bắt lỗi fileFilter (không phải hình ảnh) hoặc lỗi Cloudinary chưa cấu hình
-        console.error("Lỗi Upload:", err); // Log ra console để dễ debug
-        const errMsg = err.message || err.toString() || 'Lỗi hệ thống khi tải ảnh lên Cloudinary. Vui lòng kiểm tra lại cấu hình .env';
+        console.error('Lỗi Upload:', err); // Log ra console để dễ debug
+        const errMsg =
+          err.message ||
+          err.toString() ||
+          'Lỗi hệ thống khi tải ảnh lên Cloudinary. Vui lòng kiểm tra lại cấu hình .env';
         return sendResponse(res, 400, null, false, [errMsg]);
       }
 

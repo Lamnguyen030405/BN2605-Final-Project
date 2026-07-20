@@ -30,7 +30,7 @@ const wishlistSchema = new mongoose.Schema(
       updatedAt: false,
     },
     versionKey: false,
-  }
+  },
 );
 
 // Tạo Compound Index để đảm bảo 1 User chỉ lưu 1 Property 1 lần[cite: 3]

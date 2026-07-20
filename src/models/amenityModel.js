@@ -30,7 +30,7 @@ const amenitySchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-  }
+  },
 );
 
 export const Amenity = mongoose.model('Amenity', amenitySchema);

@@ -66,4 +66,9 @@ const deleteSchema = {
   }),
 };
 
-export { updateProfileSchema, updatePasswordSchema, statusSchema, deleteSchema };
+export {
+  updateProfileSchema,
+  updatePasswordSchema,
+  statusSchema,
+  deleteSchema,
+};

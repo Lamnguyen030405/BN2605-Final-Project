@@ -27,7 +27,7 @@ const ticketSchema = new mongoose.Schema(
   },
   {
     versionKey: false,
-  }
+  },
 );
 
 export const Ticket = mongoose.model('Ticket', ticketSchema);

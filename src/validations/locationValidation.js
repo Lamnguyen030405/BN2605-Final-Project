@@ -57,9 +57,11 @@ const updateLocationSchema = {
       'number.min': 'Kinh độ không hợp lệ (>= -180)',
       'number.max': 'Kinh độ không hợp lệ (<= 180)',
     }),
-  }).min(1).messages({
-    'object.min': 'Vui lòng cung cấp ít nhất một trường để cập nhật',
-  }),
+  })
+    .min(1)
+    .messages({
+      'object.min': 'Vui lòng cung cấp ít nhất một trường để cập nhật',
+    }),
 };
 
 const deleteLocationSchema = {

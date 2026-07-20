@@ -87,7 +87,7 @@ const updateLocation = async (req, res) => {
     const updatedLocation = await Location.findOneAndUpdate(
       { _id: id, isDeleted: false },
       { $set: { name, city, province, country, latitude, longitude } },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     )
       .select('-deletedAt -deletedBy -isDeleted')
       .lean();
@@ -117,7 +117,7 @@ const deleteLocation = async (req, res) => {
           deletedBy: req.user.id,
         },
       },
-      { new: true }
+      { new: true },
     );
 
     if (!deletedLocation) {

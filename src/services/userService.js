@@ -7,7 +7,7 @@ const createUser = async (
   email,
   phone,
   password,
-  roleName = 'customer'
+  roleName = 'customer',
 ) => {
   const role = await roleService.getRoleByName(roleName);
 
@@ -49,7 +49,7 @@ const updateUser = async (id, updateData) => {
     {
       new: true,
       runValidators: true,
-    }
+    },
   ).lean();
 
   return mongooseToObject(user);

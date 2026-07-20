@@ -52,7 +52,10 @@ const checkRole = (allowedRoles) => async (req, res, next) => {
 
     next();
   } catch (error) {
-    return sendResponse(res, 500, null, false, 'Internal server error');
+    return sendResponse(res, 500, null, false, [
+      'Internal server error',
+      error.message,
+    ]);
   }
 };
 

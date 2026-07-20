@@ -37,7 +37,7 @@ const login = async (req, res) => {
         user: response.data.user,
         redirectUrl: response.data.redirectUrl,
       },
-      response.success
+      response.success,
     );
   } catch (error) {
     return sendResponse(res, 500, null, false, [
@@ -61,7 +61,7 @@ const register = async (req, res) => {
       email,
       phone,
       password,
-      role
+      role,
     );
 
     if (response.status && response.status !== 200) {
@@ -74,7 +74,7 @@ const register = async (req, res) => {
       res,
       response.status || 201,
       response.data || response,
-      true
+      true,
     );
   } catch (error) {
     return sendResponse(res, 500, null, false, [
@@ -148,7 +148,10 @@ const logout = async (req, res) => {
     res.clearCookie('refreshToken');
     return sendResponse(res, 200, null, true, 'Logout successful');
   } catch (error) {
-    return sendResponse(res, 500, null, false, 'Logout failed');
+    return sendResponse(res, 500, null, false, [
+      'Logout failed',
+      error.message,
+    ]);
   }
 };
 

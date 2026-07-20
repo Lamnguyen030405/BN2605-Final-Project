@@ -7,7 +7,7 @@ const imageSchema = new mongoose.Schema(
     is_primary: { type: Boolean, default: false },
     sort_order: { type: Number, default: 0 },
   },
-  { _id: false }
+  { _id: false },
 );
 
 const propertySchema = new mongoose.Schema(
@@ -63,7 +63,7 @@ const propertySchema = new mongoose.Schema(
       updatedAt: 'updated_at',
     },
     versionKey: false,
-  }
+  },
 );
 
 export const Property = mongoose.model('Property', propertySchema);

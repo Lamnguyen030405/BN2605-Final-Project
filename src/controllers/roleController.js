@@ -7,7 +7,9 @@ const createRole = async (req, res) => {
     const roleResponse = await roleService.createRole({ name, description });
 
     if (roleResponse.status) {
-      return sendResponse(res, roleResponse.status, null, false, [roleResponse.message]);
+      return sendResponse(res, roleResponse.status, null, false, [
+        roleResponse.message,
+      ]);
     }
 
     return sendResponse(res, 201, roleResponse, true, ['Tạo quyền thành công']);
@@ -36,7 +38,9 @@ const updateRole = async (req, res) => {
       return sendResponse(res, 404, null, false, ['Không tìm thấy quyền này']);
     }
 
-    return sendResponse(res, 200, updatedRole, true, ['Cập nhật quyền thành công']);
+    return sendResponse(res, 200, updatedRole, true, [
+      'Cập nhật quyền thành công',
+    ]);
   } catch (err) {
     return sendResponse(res, 500, null, false, [err.message]);
   }
@@ -45,7 +49,7 @@ const updateRole = async (req, res) => {
 const deleteRole = async (req, res) => {
   try {
     const { id } = req.params;
-    
+
     const deletedRole = await roleService.deleteRole(id, req.user.id);
 
     if (!deletedRole) {

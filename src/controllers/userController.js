@@ -35,7 +35,7 @@ const updateProfile = async (req, res) => {
     const updatedUser = await User.findByIdAndUpdate(
       req.user.id,
       { $set: updateData },
-      { new: true, runValidators: true }
+      { new: true, runValidators: true },
     )
       .select('-password -deletedAt -isDeleted')
       .populate('role', 'name description')
@@ -62,7 +62,9 @@ const updatePassword = async (req, res) => {
 
     const isMatch = await bcrypt.compare(oldPassword, user.password);
     if (!isMatch) {
-      return sendResponse(res, 400, null, false, ['Mật khẩu cũ không chính xác']);
+      return sendResponse(res, 400, null, false, [
+        'Mật khẩu cũ không chính xác',
+      ]);
     }
 
     const salt = await bcrypt.genSalt(10);
@@ -102,14 +104,18 @@ const toggleUserStatus = async (req, res) => {
 
     // Không cho phép admin tự khóa tài khoản của chính mình
     if (user._id.toString() === req.user.id) {
-      return sendResponse(res, 400, null, false, ['Không thể tự khóa tài khoản của chính mình']);
+      return sendResponse(res, 400, null, false, [
+        'Không thể tự khóa tài khoản của chính mình',
+      ]);
     }
 
     user.isActive = isActive;
     await user.save();
 
     const action = isActive ? 'Mở khóa' : 'Khóa';
-    return sendResponse(res, 200, null, true, [`${action} tài khoản thành công`]);
+    return sendResponse(res, 200, null, true, [
+      `${action} tài khoản thành công`,
+    ]);
   } catch (error) {
     return sendResponse(res, 500, null, false, [error.message]);
   }
@@ -125,7 +131,9 @@ const deleteUser = async (req, res) => {
     }
 
     if (user._id.toString() === req.user.id) {
-      return sendResponse(res, 400, null, false, ['Không thể tự xóa tài khoản của chính mình']);
+      return sendResponse(res, 400, null, false, [
+        'Không thể tự xóa tài khoản của chính mình',
+      ]);
     }
 
     user.isDeleted = true;
@@ -139,4 +147,11 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export { getProfile, updateProfile, updatePassword, getAllUsers, toggleUserStatus, deleteUser };
+export {
+  getProfile,
+  updateProfile,
+  updatePassword,
+  getAllUsers,
+  toggleUserStatus,
+  deleteUser,
+};

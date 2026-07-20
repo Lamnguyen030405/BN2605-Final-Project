@@ -22,7 +22,9 @@ const validate = (schema) => (req, res, next) => {
   });
 
   if (error) {
-    const errorMessages = error.details.map((detail) => detail.message.replace(/"/g, ''));
+    const errorMessages = error.details.map((detail) =>
+      detail.message.replace(/"/g, ''),
+    );
     return sendResponse(res, 400, null, false, errorMessages);
   }
 
