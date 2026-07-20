@@ -139,7 +139,7 @@ const login = async (identifier, password) => {
       return { status: 403, message: 'Account has been deleted' };
     }
 
-    if (!user.is_active) {
+    if (!user.isActive) {
       return { status: 403, message: 'Account is not activated' };
     }
 

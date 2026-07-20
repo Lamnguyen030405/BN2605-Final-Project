@@ -23,12 +23,23 @@ const userSchema = new mongoose.Schema(
       type: String,
       required: true,
     },
+    avatar: {
+      type: String,
+      default: '',
+    },
+    dateOfBirth: {
+      type: Date,
+    },
+    gender: {
+      type: String,
+      enum: ['male', 'female', 'other'],
+    },
     role: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'Role',
       required: true,
     },
-    is_active: {
+    isActive: {
       type: Boolean,
       default: true,
     },

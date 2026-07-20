@@ -12,7 +12,7 @@ const ticketSchema = new mongoose.Schema(
     price: { type: Number, required: true },
     quota_per_day: { type: Number },
     valid_days: { type: Number, default: 1 },
-    is_active: { type: Boolean, default: true },
+    isActive: { type: Boolean, default: true },
     isDeleted: {
       type: Boolean,
       default: false,

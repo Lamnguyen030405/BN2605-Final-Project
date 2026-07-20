@@ -42,7 +42,7 @@ const propertySchema = new mongoose.Schema(
     base_price: { type: Number, required: true, default: 0 },
     avg_rating: { type: Number, default: 0 },
     review_count: { type: Number, default: 0 },
-    is_active: { type: Boolean, default: true },
+    isActive: { type: Boolean, default: true },
     amenities: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Amenity' }],
     isDeleted: {
       type: Boolean,
