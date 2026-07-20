@@ -7,12 +7,23 @@
     "test": "jest --passWithNoTests"
   },
   "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cloudinary": "^1.41.3",
+    "cookie-parser": "^1.4.7",
     "dotenv": "^17.4.2",
     "express": "^5.2.1",
     "express-handlebars": "^9.0.1",
+    "express-rate-limit": "^8.6.0",
+    "express-session": "^1.19.0",
+    "joi": "^18.2.3",
+    "jsonwebtoken": "^9.0.3",
     "method-override": "^3.0.0",
     "mongoose": "^9.7.0",
+    "morgan": "^1.11.0",
+    "multer": "^2.2.0",
+    "multer-storage-cloudinary": "^4.0.0",
     "mysql2": "^3.22.5",
+    "nodemailer": "^9.0.3",
     "readline-sync": "^1.4.10"
   },
   "type": "module",
@@ -21,7 +32,6 @@
     "eslint": "^10.7.0",
     "globals": "^17.7.0",
     "jest": "^30.4.2",
-    "morgan": "^1.11.0",
     "nodemon": "^3.1.14",
     "prettier": "^3.8.4",
     "sass": "^1.100.0"
