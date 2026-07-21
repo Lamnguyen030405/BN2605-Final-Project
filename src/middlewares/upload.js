@@ -39,38 +39,39 @@ const createUploader = (folderName) => {
     },
   });
 
-  // Trả về một hàm Wrapper đóng gói Multer để có thể dùng hàm sendResponse báo lỗi
-  return (fieldName) => (req, res, next) => {
-    const uploadSingle = upload.single(fieldName);
-
-    uploadSingle(req, res, (err) => {
-      if (err instanceof multer.MulterError) {
-        // Bắt lỗi kích thước file từ Multer
-        if (err.code === 'LIMIT_FILE_SIZE') {
-          return sendResponse(res, 400, null, false, [
-            'Kích thước ảnh quá lớn, tối đa cho phép là 5MB',
-          ]);
-        }
+  // Hàm xử lý lỗi chung
+  const handleUploadError = (err, res, next) => {
+    if (err instanceof multer.MulterError) {
+      if (err.code === 'LIMIT_FILE_SIZE') {
         return sendResponse(res, 400, null, false, [
-          err.message || 'Lỗi xử lý file từ Multer',
+          'Kích thước ảnh quá lớn, tối đa cho phép là 5MB',
         ]);
-      } else if (err) {
-        // Bắt lỗi fileFilter (không phải hình ảnh) hoặc lỗi Cloudinary chưa cấu hình
-        console.error('Lỗi Upload:', err); // Log ra console để dễ debug
-        const errMsg =
-          err.message ||
-          err.toString() ||
-          'Lỗi hệ thống khi tải ảnh lên Cloudinary. Vui lòng kiểm tra lại cấu hình .env';
-        return sendResponse(res, 400, null, false, [errMsg]);
       }
+      return sendResponse(res, 400, null, false, [
+        err.message || 'Lỗi xử lý file từ Multer',
+      ]);
+    } else if (err) {
+      console.error('Lỗi Upload:', err);
+      const errMsg =
+        err.message ||
+        err.toString() ||
+        'Lỗi hệ thống khi tải ảnh lên Cloudinary. Vui lòng kiểm tra lại cấu hình .env';
+      return sendResponse(res, 400, null, false, [errMsg]);
+    }
+    next();
+  };
 
-      // Check nếu người dùng không chọn file (Bỏ qua bước bắt lỗi này để cho phép update các field text khác)
-      // if (!req.file) {
-      //   return sendResponse(res, 400, null, false, ['Vui lòng chọn một file ảnh để tải lên']);
-      // }
-
-      next();
-    });
+  return {
+    single: (fieldName) => (req, res, next) => {
+      upload.single(fieldName)(req, res, (err) =>
+        handleUploadError(err, res, next),
+      );
+    },
+    array: (fieldName, maxCount) => (req, res, next) => {
+      upload.array(fieldName, maxCount)(req, res, (err) =>
+        handleUploadError(err, res, next),
+      );
+    },
   };
 };
 

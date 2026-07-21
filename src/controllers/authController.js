@@ -6,7 +6,7 @@ const login = async (req, res) => {
 
   if (!identifier || !password) {
     return sendResponse(res, 400, null, false, [
-      'Identifier and password are required',
+      'Email/Số điện thoại và mật khẩu là bắt buộc',
     ]);
   }
 
@@ -41,7 +41,7 @@ const login = async (req, res) => {
     );
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Error logging in',
+      'Lỗi khi đăng nhập',
       error.message,
     ]);
   }
@@ -51,9 +51,8 @@ const register = async (req, res) => {
   const { full_name, email, phone, password, role } = req.body;
 
   try {
-    // Validate required fields
     if (!full_name || !email || !phone || !password) {
-      throw new Error('All required fields are required.');
+      throw new Error('Vui lòng điền đầy đủ các trường bắt buộc.');
     }
 
     const response = await authService.register(
@@ -78,7 +77,7 @@ const register = async (req, res) => {
     );
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Error creating user',
+      'Lỗi khi đăng ký tài khoản',
       error.message,
     ]);
   }
@@ -89,7 +88,7 @@ const verifyOTP = async (req, res) => {
     const { email, otpCode } = req.body;
 
     if (!email || !otpCode) {
-      throw new Error('Missing required fields');
+      throw new Error('Vui lòng nhập đầy đủ email và mã OTP');
     }
 
     const response = await authService.verifyOtp(email, otpCode);
@@ -103,7 +102,7 @@ const verifyOTP = async (req, res) => {
     return sendResponse(res, 200, { user: response.data || response }, true);
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Error verifying OTP',
+      'Lỗi khi xác thực OTP',
       error.message,
     ]);
   }
@@ -114,7 +113,9 @@ const refresh = async (req, res) => {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!refreshToken) {
-      return sendResponse(res, 400, null, false, ['Refresh token is required']);
+      return sendResponse(res, 400, null, false, [
+        'Vui lòng cung cấp refresh token',
+      ]);
     }
 
     const response = await authService.refreshToken(refreshToken);
@@ -137,7 +138,7 @@ const refresh = async (req, res) => {
     return sendResponse(res, response.status || 200, response.data, true);
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Error refreshing token',
+      'Lỗi khi làm mới token',
       error.message,
     ]);
   }
@@ -146,10 +147,10 @@ const refresh = async (req, res) => {
 const logout = async (req, res) => {
   try {
     res.clearCookie('refreshToken');
-    return sendResponse(res, 200, null, true, 'Logout successful');
+    return sendResponse(res, 200, null, true, 'Đăng xuất thành công');
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Logout failed',
+      'Lỗi khi đăng xuất',
       error.message,
     ]);
   }

@@ -22,25 +22,25 @@ const register = async (
     // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
-      return { status: 400, message: 'Invalid email format.' };
+      return { status: 400, message: 'Định dạng email không hợp lệ.' };
     }
 
     // Validate password
     if (password.length < 8) {
       return {
         status: 400,
-        message: 'Password must be at least 8 characters.',
+        message: 'Mật khẩu phải chứa ít nhất 8 ký tự.',
       };
     }
 
     const existingUser = await userService.getUserByEmailOrPhone(email, phone);
     if (existingUser) {
       if (existingUser.isDeleted) {
-        return { status: 403, message: 'Account has been deleted' };
+        return { status: 403, message: 'Tài khoản đã bị xóa' };
       }
       return {
         status: 409,
-        message: 'User with this email or phone already exists',
+        message: 'Email hoặc số điện thoại đã tồn tại',
       };
     }
 
@@ -65,7 +65,7 @@ const register = async (
 
     return {
       status: 200,
-      message: 'Registration OTP sent successfully',
+      message: 'Mã OTP đăng ký đã được gửi thành công',
       data: { email },
     };
   } catch (error) {
@@ -81,7 +81,7 @@ const verifyOtp = async (email, otpCode) => {
     if (!pendingData) {
       return {
         status: 404,
-        message: 'No pending registration found for this email.',
+        message: 'Không tìm thấy đăng ký nào đang chờ với email này.',
       };
     }
 
@@ -90,13 +90,13 @@ const verifyOtp = async (email, otpCode) => {
       pendingRegistrations.delete(email);
       return {
         status: 400,
-        message: 'OTP has expired. Please request a new one.',
+        message: 'Mã OTP đã hết hạn. Vui lòng yêu cầu mã mới.',
       };
     }
 
     // Verify OTP code
     if (pendingData.otpCode !== otpCode) {
-      return { status: 400, message: 'Invalid OTP code.' };
+      return { status: 400, message: 'Mã OTP không hợp lệ.' };
     }
 
     // Create user in database
@@ -129,27 +129,27 @@ const login = async (identifier, password) => {
   try {
     const user = await userService.getUserByEmailOrPhone(identifier);
     if (!user) {
-      return { status: 404, message: 'Invalid email or phone number' };
+      return { status: 404, message: 'Email hoặc số điện thoại không hợp lệ' };
     }
 
     const isPasswordValid = await bcrypt.compare(password, user.password);
     if (!isPasswordValid) {
-      return { status: 401, message: 'Invalid password' };
+      return { status: 401, message: 'Mật khẩu không chính xác' };
     }
 
     if (user.isDeleted) {
-      return { status: 403, message: 'Account has been deleted' };
+      return { status: 403, message: 'Tài khoản đã bị xóa' };
     }
 
     if (!user.isActive) {
-      return { status: 403, message: 'Account is not activated' };
+      return { status: 403, message: 'Tài khoản chưa được kích hoạt' };
     }
 
     // Generate tokens
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
-      role_id: user.role_id,
+      role: { role_name: user.role?.name },
     });
 
     const refreshToken = generateRefreshToken({
@@ -168,9 +168,9 @@ const login = async (identifier, password) => {
     await newRefreshToken.save();
 
     let redirectUrl = '/';
-    if (user.role_id === 1 || user.role?.role_name === 'admin') {
+    if (user.role_id === 1 || user.role?.name === 'admin') {
       redirectUrl = '/admin';
-    } else if (user.role_id === 2 || user.role?.role_name === 'owner') {
+    } else if (user.role_id === 2 || user.role?.name === 'owner') {
       redirectUrl = '/owner';
     }
     return {
@@ -184,7 +184,7 @@ const login = async (identifier, password) => {
           full_name: user.full_name,
           email: user.email,
           phone: user.phone,
-          role: user.role?.role_name || 'customer',
+          role: user.role?.name || 'customer',
         },
         redirectUrl,
       },
@@ -206,7 +206,7 @@ const refreshToken = async (token) => {
     if (!refreshTokenRecord) {
       return {
         status: 401,
-        message: 'Invalid refresh token',
+        message: 'Refresh token không hợp lệ',
       };
     }
 
@@ -214,7 +214,7 @@ const refreshToken = async (token) => {
     if (new Date() > new Date(refreshTokenRecord.expires_at)) {
       return {
         status: 401,
-        message: 'Refresh token expired',
+        message: 'Refresh token đã hết hạn',
       };
     }
 
@@ -228,23 +228,23 @@ const refreshToken = async (token) => {
     if (!user) {
       return {
         status: 404,
-        message: 'User not found',
+        message: 'Không tìm thấy người dùng',
       };
     }
 
     if (user.isDeleted) {
-      return { status: 403, message: 'Account has been deleted' };
+      return { status: 403, message: 'Tài khoản đã bị xóa' };
     }
 
     if (!user.isActive) {
-      return { status: 403, message: 'Account is not activated' };
+      return { status: 403, message: 'Tài khoản chưa được kích hoạt' };
     }
 
     // Generate new tokens
     const newAccessToken = generateAccessToken({
       id: user.id,
       email: user.email,
-      role_id: user.role_id,
+      role: { role_name: user.role?.name },
     });
 
     const newRefreshToken = generateRefreshToken({
@@ -264,7 +264,7 @@ const refreshToken = async (token) => {
 
     return {
       status: 200,
-      message: 'Token refreshed',
+      message: 'Làm mới token thành công',
       data: {
         accessToken: newAccessToken,
         refreshToken: newRefreshToken,

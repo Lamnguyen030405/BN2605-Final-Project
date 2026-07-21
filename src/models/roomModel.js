@@ -1,5 +1,15 @@
 import mongoose from 'mongoose';
 
+const imageSchema = new mongoose.Schema(
+  {
+    url: { type: String, required: true },
+    caption: { type: String },
+    is_primary: { type: Boolean, default: false },
+    sort_order: { type: Number, default: 0 },
+  },
+  { _id: false },
+);
+
 const roomSchema = new mongoose.Schema(
   {
     property_id: {
@@ -26,9 +36,14 @@ const roomSchema = new mongoose.Schema(
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
     },
+    images: [imageSchema],
   },
   {
     versionKey: false,
+    timestamps: {
+      createdAt: 'created_at',
+      updatedAt: 'updated_at',
+    },
   },
 );
 
