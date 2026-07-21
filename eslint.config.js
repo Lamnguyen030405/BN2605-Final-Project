@@ -39,16 +39,6 @@ export default [
       ],
 
       // ======================
-      // Style
-      // ======================
-      semi: ['error', 'always'],
-      quotes: ['error', 'single'],
-      indent: ['error', 2],
-      'comma-dangle': ['error', 'always-multiline'],
-      'eol-last': ['error', 'always'],
-      'no-trailing-spaces': 'error',
-
-      // ======================
       // Console
       // ======================
       'no-console': [

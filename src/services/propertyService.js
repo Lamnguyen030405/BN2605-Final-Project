@@ -39,19 +39,19 @@ const getAllProperties = async (queryParams) => {
 
   const sortOption = {};
   switch (sort_by) {
-  case 'price_asc':
-    sortOption.base_price = 1;
-    break;
-  case 'price_desc':
-    sortOption.base_price = -1;
-    break;
-  case 'rating_desc':
-    sortOption.avg_rating = -1;
-    break;
-  case 'newest':
-  default:
-    sortOption.created_at = -1;
-    break;
+    case 'price_asc':
+      sortOption.base_price = 1;
+      break;
+    case 'price_desc':
+      sortOption.base_price = -1;
+      break;
+    case 'rating_desc':
+      sortOption.avg_rating = -1;
+      break;
+    case 'newest':
+    default:
+      sortOption.created_at = -1;
+      break;
   }
 
   const skip = (Number(page) - 1) * Number(limit);
