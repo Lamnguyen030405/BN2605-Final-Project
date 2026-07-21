@@ -8,15 +8,15 @@ export const verifyToken = (req, res, next) => {
   const token = authHeader && authHeader.split(' ')[1];
 
   if (!token) {
-    return sendResponse(res, 401, null, false, 'Unauthorized');
+    return sendResponse(res, 401, null, false, 'Vui lòng đăng nhập để tiếp tục');
   }
 
   jwt.verify(token, process.env.ACCESS_TOKEN_SECRET, (err, user) => {
     if (err) {
       if (err.name === 'TokenExpiredError') {
-        return sendResponse(res, 401, null, false, 'AccessToken JWT expired');
+        return sendResponse(res, 401, null, false, 'Phiên đăng nhập đã hết hạn');
       }
-      return sendResponse(res, 401, null, false, 'Invalid or expired token');
+      return sendResponse(res, 401, null, false, 'Token không hợp lệ hoặc đã hết hạn');
     }
     req.user = user;
     next();
@@ -47,13 +47,13 @@ const checkRole = (allowedRoles) => async (req, res, next) => {
     const user = await User.findById(req.user.id).populate('role').lean();
 
     if (!user || !user.role || !allowedRoles.includes(user.role.name)) {
-      return sendResponse(res, 403, null, false, 'Access denied');
+      return sendResponse(res, 403, null, false, 'Bạn không có quyền thực hiện thao tác này');
     }
 
     next();
   } catch (error) {
     return sendResponse(res, 500, null, false, [
-      'Internal server error',
+      'Lỗi máy chủ nội bộ',
       error.message,
     ]);
   }
