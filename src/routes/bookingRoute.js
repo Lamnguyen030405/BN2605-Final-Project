@@ -15,14 +15,22 @@ router.use(verifyToken);
 // ==============================
 // PUBLIC FOR LOGGED IN USERS
 // ==============================
-router.post('/', validate(createBookingSchema), bookingController.createBooking);
+router.post(
+  '/',
+  validate(createBookingSchema),
+  bookingController.createBooking,
+);
 router.get('/my-bookings', bookingController.getMyBookings);
 router.patch('/:id/cancel', bookingController.cancelBooking);
 
 // ==============================
 // PROTECTED APIS (Admin or Owner)
 // ==============================
-router.get('/owner-bookings', isOwnerOrAdmin, bookingController.getOwnerBookings);
+router.get(
+  '/owner-bookings',
+  isOwnerOrAdmin,
+  bookingController.getOwnerBookings,
+);
 router.patch(
   '/:id/status',
   isOwnerOrAdmin,

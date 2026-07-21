@@ -14,23 +14,38 @@ const checkPropertyOwnership = async (propertyId, userId, userRole) => {
 };
 
 const createBooking = async (data, userId) => {
-  const { property_id, booking_type, rooms, tickets, check_in, payment_method } = data;
+  const {
+    property_id,
+    booking_type,
+    rooms,
+    tickets,
+    check_in,
+    payment_method,
+  } = data;
 
   const property = await Property.findById(property_id).lean();
   if (!property) throw new Error('Không tìm thấy cơ sở lưu trú');
 
   let totalPrice = 0;
-  let processedRooms = [];
-  let processedTickets = [];
+  const processedRooms = [];
+  const processedTickets = [];
 
   // Tính toán giá cho Khách sạn
   if (booking_type === 'hotel') {
-    if (!rooms || rooms.length === 0) throw new Error('Cần chọn ít nhất 1 phòng');
-    
+    if (!rooms || rooms.length === 0)
+      throw new Error('Cần chọn ít nhất 1 phòng');
+
     for (const roomData of rooms) {
-      const room = await Room.findOne({ _id: roomData.room_id, property_id, isDeleted: false });
+      const room = await Room.findOne({
+        _id: roomData.room_id,
+        property_id,
+        isDeleted: false,
+      });
       if (!room) throw new Error(`Không tìm thấy phòng ${roomData.room_id}`);
-      if (!room.is_available) throw new Error(`Phòng ${room.room_number || room.room_type} hiện không trống`);
+      if (!room.is_available)
+        throw new Error(
+          `Phòng ${room.room_number || room.room_type} hiện không trống`,
+        );
 
       const priceSnapshot = room.price_per_night;
       const nights = roomData.nights || 1;
@@ -49,10 +64,15 @@ const createBooking = async (data, userId) => {
 
   // Tính toán giá cho Vé tham quan
   if (booking_type === 'attraction') {
-    if (!tickets || tickets.length === 0) throw new Error('Cần chọn ít nhất 1 vé');
-    
+    if (!tickets || tickets.length === 0)
+      throw new Error('Cần chọn ít nhất 1 vé');
+
     for (const ticketData of tickets) {
-      const ticket = await Ticket.findOne({ _id: ticketData.ticket_id, property_id, isDeleted: false });
+      const ticket = await Ticket.findOne({
+        _id: ticketData.ticket_id,
+        property_id,
+        isDeleted: false,
+      });
       if (!ticket) throw new Error(`Không tìm thấy vé ${ticketData.ticket_id}`);
       if (!ticket.isActive) throw new Error(`Vé ${ticket.name} hiện ngừng bán`);
 
@@ -60,27 +80,36 @@ const createBooking = async (data, userId) => {
       // Logic nâng cao: Check quota_per_day
       if (ticket.quota_per_day) {
         // Tìm tổng số vé đã bán trong ngày đó
-        const startOfDay = new Date(visitDate.setHours(0,0,0,0));
-        const endOfDay = new Date(visitDate.setHours(23,59,59,999));
-        
+        const startOfDay = new Date(visitDate.setHours(0, 0, 0, 0));
+        const endOfDay = new Date(visitDate.setHours(23, 59, 59, 999));
+
         const existingBookings = await Booking.aggregate([
-          { $match: { 
-              property_id: property._id, 
+          {
+            $match: {
+              property_id: property._id,
               booking_type: 'attraction',
               status: { $nin: ['cancelled', 'refunded'] },
-              isDeleted: false 
-          }},
+              isDeleted: false,
+            },
+          },
           { $unwind: '$tickets' },
-          { $match: { 
+          {
+            $match: {
               'tickets.ticket_id': ticket._id,
-              'tickets.visit_date': { $gte: startOfDay, $lte: endOfDay }
-          }},
-          { $group: { _id: null, totalQuantity: { $sum: '$tickets.quantity' } } }
+              'tickets.visit_date': { $gte: startOfDay, $lte: endOfDay },
+            },
+          },
+          {
+            $group: { _id: null, totalQuantity: { $sum: '$tickets.quantity' } },
+          },
         ]);
 
-        const soldQuantity = existingBookings.length > 0 ? existingBookings[0].totalQuantity : 0;
+        const soldQuantity =
+          existingBookings.length > 0 ? existingBookings[0].totalQuantity : 0;
         if (soldQuantity + ticketData.quantity > ticket.quota_per_day) {
-          throw new Error(`Vé ${ticket.name} đã hết lượt bán trong ngày ${startOfDay.toLocaleDateString()}`);
+          throw new Error(
+            `Vé ${ticket.name} đã hết lượt bán trong ngày ${startOfDay.toLocaleDateString()}`,
+          );
         }
       }
 
@@ -137,10 +166,15 @@ const getMyBookings = async (userId) => {
 
 const getOwnerBookings = async (userId) => {
   // Tìm các property của owner
-  const properties = await Property.find({ owner_id: userId, isDeleted: false }).select('_id').lean();
-  const propertyIds = properties.map(p => p._id);
+  const properties = await Property.find({ owner_id: userId, isDeleted: false })
+    .select('_id')
+    .lean();
+  const propertyIds = properties.map((p) => p._id);
 
-  return await Booking.find({ property_id: { $in: propertyIds }, isDeleted: false })
+  return await Booking.find({
+    property_id: { $in: propertyIds },
+    isDeleted: false,
+  })
     .populate('user_id', 'full_name email phone')
     .populate('property_id', 'name')
     .populate('rooms.room_id', 'room_type room_number')
@@ -216,7 +250,7 @@ const updateBookingStatus = async (id, status, userId, userRole) => {
     booking.payment.status = 'paid';
     booking.payment.paid_at = new Date();
   }
-  
+
   if (['cancelled', 'refunded', 'completed'].includes(status)) {
     if (status === 'cancelled' || status === 'refunded') {
       booking.cancelled_at = new Date();

@@ -10,6 +10,12 @@ const router = Router();
 router.get('/', amenityController.getAllAmenities);
 
 // Admin API
-router.post('/', verifyToken, isAdmin, validate(createAmenitySchema), amenityController.createAmenity);
+router.post(
+  '/',
+  verifyToken,
+  isAdmin,
+  validate(createAmenitySchema),
+  amenityController.createAmenity,
+);
 
 export default router;

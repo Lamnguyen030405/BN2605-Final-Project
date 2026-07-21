@@ -18,13 +18,22 @@ export const createReviewSchema = Joi.object({
   value_score: Joi.number().min(1).max(10).optional(),
   comment: Joi.string().allow('', null).optional(),
 }).custom((value, helpers) => {
-  const { overall_score, cleanliness_score, service_score, location_score, value_score } = value;
-  
+  const {
+    overall_score,
+    cleanliness_score,
+    service_score,
+    location_score,
+    value_score,
+  } = value;
+
   // Nếu có bất kỳ điểm thành phần nào, không cần overall_score
-  const hasSubScore = cleanliness_score || service_score || location_score || value_score;
-  
+  const hasSubScore =
+    cleanliness_score || service_score || location_score || value_score;
+
   if (!overall_score && !hasSubScore) {
-    return helpers.message('Bạn phải cung cấp điểm tổng quát (overall_score) hoặc ít nhất một điểm thành phần');
+    return helpers.message(
+      'Bạn phải cung cấp điểm tổng quát (overall_score) hoặc ít nhất một điểm thành phần',
+    );
   }
 
   return value;
@@ -38,8 +47,11 @@ export const replyReviewSchema = Joi.object({
 });
 
 export const updateReviewStatusSchema = Joi.object({
-  status: Joi.string().valid('pending', 'approved', 'rejected', 'hidden').required().messages({
-    'any.required': 'Trạng thái là bắt buộc',
-    'any.only': 'Trạng thái không hợp lệ',
-  }),
+  status: Joi.string()
+    .valid('pending', 'approved', 'rejected', 'hidden')
+    .required()
+    .messages({
+      'any.required': 'Trạng thái là bắt buộc',
+      'any.only': 'Trạng thái không hợp lệ',
+    }),
 });

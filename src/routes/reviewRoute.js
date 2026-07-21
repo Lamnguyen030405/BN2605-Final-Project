@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyToken, isAdmin, isOwnerOrAdmin } from '../middlewares/auth.js';
+import { verifyToken, isOwnerOrAdmin } from '../middlewares/auth.js';
 import { validate } from '../middlewares/validate.js';
 import {
   createReviewSchema,

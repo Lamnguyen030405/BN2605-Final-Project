@@ -6,7 +6,10 @@ const createReview = async (req, res) => {
     const review = await reviewService.createReview(req.body, req.user.id);
     return sendResponse(res, 201, review, true, ['Tạo đánh giá thành công']);
   } catch (error) {
-    if (error.message.includes('quyền') || error.message.includes('hoàn thành')) {
+    if (
+      error.message.includes('quyền') ||
+      error.message.includes('hoàn thành')
+    ) {
       return sendResponse(res, 403, null, false, [error.message]);
     }
     if (error.message.includes('đã đánh giá')) {
@@ -18,7 +21,10 @@ const createReview = async (req, res) => {
 
 const getPropertyReviews = async (req, res) => {
   try {
-    const reviews = await reviewService.getPropertyReviews(req.params.propertyId, req.query);
+    const reviews = await reviewService.getPropertyReviews(
+      req.params.propertyId,
+      req.query,
+    );
     return sendResponse(res, 200, reviews, true);
   } catch (error) {
     return sendResponse(res, 500, null, false, [error.message]);
@@ -40,7 +46,12 @@ const deleteReview = async (req, res) => {
 const replyToReview = async (req, res) => {
   try {
     const userRole = req.user.role?.name || 'customer';
-    const review = await reviewService.replyToReview(req.params.id, req.body.content, req.user.id, userRole);
+    const review = await reviewService.replyToReview(
+      req.params.id,
+      req.body.content,
+      req.user.id,
+      userRole,
+    );
     return sendResponse(res, 200, review, true, ['Đã phản hồi đánh giá']);
   } catch (error) {
     if (error.message.includes('quyền')) {
@@ -52,8 +63,13 @@ const replyToReview = async (req, res) => {
 
 const updateReviewStatus = async (req, res) => {
   try {
-    const review = await reviewService.updateReviewStatus(req.params.id, req.body.status);
-    return sendResponse(res, 200, review, true, ['Cập nhật trạng thái đánh giá thành công']);
+    const review = await reviewService.updateReviewStatus(
+      req.params.id,
+      req.body.status,
+    );
+    return sendResponse(res, 200, review, true, [
+      'Cập nhật trạng thái đánh giá thành công',
+    ]);
   } catch (error) {
     return sendResponse(res, 500, null, false, [error.message]);
   }
@@ -64,5 +80,5 @@ export default {
   getPropertyReviews,
   deleteReview,
   replyToReview,
-  updateReviewStatus
+  updateReviewStatus,
 };

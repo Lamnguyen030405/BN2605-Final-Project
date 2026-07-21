@@ -1,7 +1,9 @@
 import { Amenity } from '../models/amenityModel.js';
 
 const getAllAmenities = async () => {
-  return await Amenity.find({ isDeleted: false }).sort({ category: 1, name: 1 }).lean();
+  return await Amenity.find({ isDeleted: false })
+    .sort({ category: 1, name: 1 })
+    .lean();
 };
 
 const createAmenity = async (data) => {

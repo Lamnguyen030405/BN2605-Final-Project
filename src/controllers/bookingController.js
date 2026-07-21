@@ -6,7 +6,10 @@ const createBooking = async (req, res) => {
     const booking = await bookingService.createBooking(req.body, req.user.id);
     return sendResponse(res, 201, booking, true, ['Tạo Booking thành công']);
   } catch (error) {
-    if (error.message.includes('không trống') || error.message.includes('hết lượt')) {
+    if (
+      error.message.includes('không trống') ||
+      error.message.includes('hết lượt')
+    ) {
       return sendResponse(res, 400, null, false, [error.message]);
     }
     return sendResponse(res, 500, null, false, [error.message]);
@@ -43,10 +46,17 @@ const getAllBookings = async (req, res) => {
 const getBookingById = async (req, res) => {
   try {
     const userRole = req.user.role?.name || 'customer';
-    const booking = await bookingService.getBookingById(req.params.id, req.user.id, userRole);
+    const booking = await bookingService.getBookingById(
+      req.params.id,
+      req.user.id,
+      userRole,
+    );
     return sendResponse(res, 200, booking, true);
   } catch (error) {
-    if (error.message.includes('quyền') || error.message.includes('Không tìm thấy')) {
+    if (
+      error.message.includes('quyền') ||
+      error.message.includes('Không tìm thấy')
+    ) {
       return sendResponse(res, 403, null, false, [error.message]);
     }
     return sendResponse(res, 500, null, false, [error.message]);
@@ -55,7 +65,10 @@ const getBookingById = async (req, res) => {
 
 const cancelBooking = async (req, res) => {
   try {
-    const booking = await bookingService.cancelBooking(req.params.id, req.user.id);
+    const booking = await bookingService.cancelBooking(
+      req.params.id,
+      req.user.id,
+    );
     return sendResponse(res, 200, booking, true, ['Hủy Booking thành công']);
   } catch (error) {
     if (error.message.includes('quyền')) {
@@ -69,8 +82,15 @@ const updateBookingStatus = async (req, res) => {
   try {
     const userRole = req.user.role?.name || 'customer';
     const { status } = req.body;
-    const booking = await bookingService.updateBookingStatus(req.params.id, status, req.user.id, userRole);
-    return sendResponse(res, 200, booking, true, ['Cập nhật trạng thái thành công']);
+    const booking = await bookingService.updateBookingStatus(
+      req.params.id,
+      status,
+      req.user.id,
+      userRole,
+    );
+    return sendResponse(res, 200, booking, true, [
+      'Cập nhật trạng thái thành công',
+    ]);
   } catch (error) {
     if (error.message.includes('quyền')) {
       return sendResponse(res, 403, null, false, [error.message]);

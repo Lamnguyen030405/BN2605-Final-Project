@@ -113,7 +113,9 @@ const refresh = async (req, res) => {
     const refreshToken = req.cookies?.refreshToken || req.body?.refreshToken;
 
     if (!refreshToken) {
-      return sendResponse(res, 400, null, false, ['Vui lòng cung cấp refresh token']);
+      return sendResponse(res, 400, null, false, [
+        'Vui lòng cung cấp refresh token',
+      ]);
     }
 
     const response = await authService.refreshToken(refreshToken);
