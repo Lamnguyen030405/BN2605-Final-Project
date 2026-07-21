@@ -52,7 +52,6 @@ export const createBookingSchema = Joi.object({
   guests: Joi.number().integer().min(1).default(1),
   special_requests: Joi.string().allow('', null),
 
-  // Thanh toán
   payment_method: Joi.string()
     .valid(
       'credit_card',

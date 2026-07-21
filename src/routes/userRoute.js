@@ -12,14 +12,10 @@ import userController from '../controllers/userController.js';
 
 const router = Router();
 
-// ==============================
-// CÁC API DÀNH CHO NGƯỜI DÙNG (Cần đăng nhập)
-// ==============================
 router.use(verifyToken);
 
 router.get('/me', userController.getProfile);
 
-// Đã gộp chức năng upload avatar bằng form-data vào chung với cập nhật profile
 router.put(
   '/me',
   uploadAvatar.single('avatar'),
@@ -33,9 +29,6 @@ router.put(
   userController.updatePassword,
 );
 
-// ==============================
-// CÁC API DÀNH CHO ADMIN (Cần đăng nhập và quyền Admin)
-// ==============================
 router.get('/', isAdmin, userController.getAllUsers);
 
 router.patch(

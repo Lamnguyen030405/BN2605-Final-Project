@@ -1,4 +1,3 @@
-// Helper function để chuẩn hóa format trả về cho toàn bộ API
 const sendResponse = (
   res,
   statusCode,

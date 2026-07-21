@@ -10,7 +10,6 @@ import roleController from '../controllers/roleController.js';
 
 const router = Router();
 
-// Phân quyền: Tất cả API của Role đều chỉ dành cho Admin
 router.use(verifyToken, isAdmin);
 
 router.get('/', roleController.getAllRoles);

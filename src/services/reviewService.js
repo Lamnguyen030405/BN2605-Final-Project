@@ -2,7 +2,6 @@ import { Review } from '../models/reviewModel.js';
 import { Booking } from '../models/bookingModel.js';
 import { Property } from '../models/propertyModel.js';
 
-// Hàm helper để tính lại điểm trung bình cho Property
 const updatePropertyRating = async (propertyId) => {
   const reviews = await Review.find({
     property_id: propertyId,
@@ -38,7 +37,6 @@ const createReview = async (data, userId) => {
   } = data;
   let overall_score = data.overall_score;
 
-  // 1. Kiểm tra booking hợp lệ
   const booking = await Booking.findOne({ _id: booking_id, isDeleted: false });
   if (!booking) throw new Error('Không tìm thấy Booking');
   if (booking.user_id.toString() !== userId)
@@ -46,11 +44,9 @@ const createReview = async (data, userId) => {
   if (booking.status !== 'completed')
     throw new Error('Bạn chỉ có thể đánh giá sau khi chuyến đi đã hoàn thành');
 
-  // 2. Kiểm tra xem đã đánh giá chưa
   const existingReview = await Review.findOne({ booking_id, isDeleted: false });
   if (existingReview) throw new Error('Bạn đã đánh giá cho Booking này rồi');
 
-  // 3. Tính toán điểm tổng (nếu có điểm thành phần)
   const subScores = [
     cleanliness_score,
     service_score,
@@ -62,7 +58,6 @@ const createReview = async (data, userId) => {
     overall_score = parseFloat((sum / subScores.length).toFixed(1));
   }
 
-  // 4. Lưu đánh giá
   const review = new Review({
     booking_id,
     user_id: userId,
@@ -78,14 +73,12 @@ const createReview = async (data, userId) => {
 
   await review.save();
 
-  // 5. Tính lại điểm trung bình của Property
   await updatePropertyRating(booking.property_id);
 
   return review;
 };
 
 const getPropertyReviews = async (propertyId, query = {}) => {
-  // Public user chỉ thấy những review được approved
   return await Review.find({
     property_id: propertyId,
     status: 'approved',
@@ -110,7 +103,6 @@ const deleteReview = async (reviewId, userId) => {
   review.deletedBy = userId;
   await review.save();
 
-  // Cập nhật lại điểm của Property
   await updatePropertyRating(review.property_id);
 
   return review;
@@ -120,7 +112,6 @@ const replyToReview = async (reviewId, content, userId, userRole) => {
   const review = await Review.findOne({ _id: reviewId, isDeleted: false });
   if (!review) throw new Error('Không tìm thấy đánh giá');
 
-  // Check quyền chủ cơ sở
   if (userRole !== 'admin') {
     const property = await Property.findById(review.property_id).lean();
     if (property.owner_id.toString() !== userId) {
@@ -146,7 +137,6 @@ const updateReviewStatus = async (reviewId, status) => {
   review.status = status;
   await review.save();
 
-  // Nếu trạng thái thay đổi liên quan đến việc hiển thị/ẩn, cần tính lại điểm
   if (
     (oldStatus === 'approved' && status !== 'approved') ||
     (oldStatus !== 'approved' && status === 'approved')

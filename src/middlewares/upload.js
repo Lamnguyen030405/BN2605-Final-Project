@@ -17,7 +17,6 @@ const createUploader = (folderName) => {
     },
   });
 
-  // Bộ lọc loại bỏ những file không phải là hình ảnh
   const fileFilter = (req, file, cb) => {
     if (file.mimetype.startsWith('image/')) {
       cb(null, true);
@@ -39,7 +38,6 @@ const createUploader = (folderName) => {
     },
   });
 
-  // Hàm xử lý lỗi chung
   const handleUploadError = (err, res, next) => {
     if (err instanceof multer.MulterError) {
       if (err.code === 'LIMIT_FILE_SIZE') {
@@ -75,7 +73,6 @@ const createUploader = (folderName) => {
   };
 };
 
-// Khởi tạo sẵn các middleware cho các mục đích cụ thể
 export const uploadAvatar = createUploader('Avatars');
 export const uploadPropertyImage = createUploader('Properties');
 export const uploadRoomImage = createUploader('Rooms');

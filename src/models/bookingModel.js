@@ -107,7 +107,6 @@ const bookingSchema = new mongoose.Schema(
       ref: 'User',
     },
 
-    // Subdocuments nhúng vào Booking
     rooms: [bookingRoomSchema],
     tickets: [bookingTicketSchema],
     payment: paymentSchema,

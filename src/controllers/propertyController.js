@@ -31,19 +31,16 @@ const createProperty = async (req, res) => {
   try {
     const propertyData = { ...req.body };
 
-    // Nếu là admin tạo giùm thì có thể truyền owner_id, ngược lại tự lấy từ token
     if (!propertyData.owner_id) {
       propertyData.owner_id = req.user.id;
     }
 
-    // Xử lý amenities nếu gửi lên dạng string "id1,id2"
     if (typeof propertyData.amenities === 'string') {
       propertyData.amenities = propertyData.amenities
         .split(',')
         .map((id) => id.trim());
     }
 
-    // Xử lý file upload
     if (req.files && req.files.length > 0) {
       propertyData.images = req.files.map((file, index) => ({
         url: file.path,
@@ -69,19 +66,17 @@ const updateProperty = async (req, res) => {
     const { id } = req.params;
     const propertyData = { ...req.body };
 
-    // Xử lý amenities
     if (typeof propertyData.amenities === 'string') {
       propertyData.amenities = propertyData.amenities
         .split(',')
         .map((item) => item.trim());
     }
 
-    // Lấy Role thực tế của User để Validate Data Ownership
     const userRole =
       req.user.role?.role_name || (req.user.role_id === 1 ? 'admin' : 'owner');
 
     let finalImages = [];
-    // Xử lý ảnh cũ cần giữ lại (gửi từ client lên dạng mảng các object hoặc URL)
+
     if (propertyData.retained_images) {
       try {
         finalImages = Array.isArray(propertyData.retained_images)
@@ -93,7 +88,6 @@ const updateProperty = async (req, res) => {
       delete propertyData.retained_images;
     }
 
-    // Thêm các ảnh mới upload
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map((file, index) => ({
         url: file.path,

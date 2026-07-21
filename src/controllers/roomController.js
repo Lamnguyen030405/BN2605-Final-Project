@@ -32,7 +32,6 @@ const createRoom = async (req, res) => {
     const userRole =
       req.user.role?.role_name || (req.user.role_id === 1 ? 'admin' : 'owner');
 
-    // Xử lý file upload
     if (req.files && req.files.length > 0) {
       roomData.images = req.files.map((file, index) => ({
         url: file.path,
@@ -66,7 +65,7 @@ const updateRoom = async (req, res) => {
       req.user.role?.role_name || (req.user.role_id === 1 ? 'admin' : 'owner');
 
     let finalImages = [];
-    // Xử lý ảnh cũ cần giữ lại (gửi từ client lên dạng mảng các object hoặc URL)
+
     if (roomData.retained_images) {
       try {
         finalImages = Array.isArray(roomData.retained_images)
@@ -78,7 +77,6 @@ const updateRoom = async (req, res) => {
       delete roomData.retained_images;
     }
 
-    // Thêm các ảnh mới upload
     if (req.files && req.files.length > 0) {
       const newImages = req.files.map((file, index) => ({
         url: file.path,

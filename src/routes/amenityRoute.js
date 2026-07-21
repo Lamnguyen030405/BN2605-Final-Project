@@ -6,10 +6,8 @@ import amenityController from '../controllers/amenityController.js';
 
 const router = Router();
 
-// Public API
 router.get('/', amenityController.getAllAmenities);
 
-// Admin API
 router.post(
   '/',
   verifyToken,

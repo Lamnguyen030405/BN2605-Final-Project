@@ -29,7 +29,7 @@ const reviewSchema = new mongoose.Schema(
       enum: ['pending', 'approved', 'rejected', 'hidden'],
       default: 'approved',
     },
-    // Nhúng review_reply trực tiếp
+
     reply: {
       owner_id: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
       content: { type: String },

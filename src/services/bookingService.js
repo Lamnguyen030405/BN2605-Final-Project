@@ -30,7 +30,6 @@ const createBooking = async (data, userId) => {
   const processedRooms = [];
   const processedTickets = [];
 
-  // Tính toán giá cho Khách sạn
   if (booking_type === 'hotel') {
     if (!rooms || rooms.length === 0)
       throw new Error('Cần chọn ít nhất 1 phòng');
@@ -57,12 +56,10 @@ const createBooking = async (data, userId) => {
         nights,
       });
 
-      // Tạm thời đánh dấu phòng là không trống (Logic đơn giản)
       await Room.findByIdAndUpdate(room._id, { is_available: false });
     }
   }
 
-  // Tính toán giá cho Vé tham quan
   if (booking_type === 'attraction') {
     if (!tickets || tickets.length === 0)
       throw new Error('Cần chọn ít nhất 1 vé');
@@ -77,9 +74,8 @@ const createBooking = async (data, userId) => {
       if (!ticket.isActive) throw new Error(`Vé ${ticket.name} hiện ngừng bán`);
 
       const visitDate = new Date(ticketData.visit_date);
-      // Logic nâng cao: Check quota_per_day
+
       if (ticket.quota_per_day) {
-        // Tìm tổng số vé đã bán trong ngày đó
         const startOfDay = new Date(visitDate.setHours(0, 0, 0, 0));
         const endOfDay = new Date(visitDate.setHours(23, 59, 59, 999));
 
@@ -126,7 +122,6 @@ const createBooking = async (data, userId) => {
     }
   }
 
-  // Tính tiền cuối cùng (Có thể áp dụng mã giảm giá ở đây sau này)
   const discount = data.discount || 0;
   const finalPrice = Math.max(0, totalPrice - discount);
 
@@ -165,7 +160,6 @@ const getMyBookings = async (userId) => {
 };
 
 const getOwnerBookings = async (userId) => {
-  // Tìm các property của owner
   const properties = await Property.find({ owner_id: userId, isDeleted: false })
     .select('_id')
     .lean();
@@ -201,7 +195,6 @@ const getBookingById = async (id, userId, userRole) => {
 
   if (!booking) throw new Error('Không tìm thấy Booking');
 
-  // Phân quyền xem
   if (userRole === 'customer' && booking.user_id._id.toString() !== userId) {
     throw new Error('Bạn không có quyền xem Booking này');
   } else if (userRole === 'owner') {
@@ -229,7 +222,6 @@ const cancelBooking = async (id, userId) => {
   booking.cancelled_at = new Date();
   await booking.save();
 
-  // Nhả phòng trống lại
   if (booking.booking_type === 'hotel') {
     for (const r of booking.rooms) {
       await Room.findByIdAndUpdate(r.room_id, { is_available: true });
@@ -255,7 +247,7 @@ const updateBookingStatus = async (id, status, userId, userRole) => {
     if (status === 'cancelled' || status === 'refunded') {
       booking.cancelled_at = new Date();
     }
-    // Nhả phòng trống lại
+
     if (booking.booking_type === 'hotel') {
       for (const r of booking.rooms) {
         await Room.findByIdAndUpdate(r.room_id, { is_available: true });

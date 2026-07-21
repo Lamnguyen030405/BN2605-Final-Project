@@ -11,25 +11,16 @@ import propertyController from '../controllers/propertyController.js';
 
 const router = Router();
 
-// ==============================
-// PUBLIC APIS
-// ==============================
-// Tìm kiếm, lọc và phân trang Property
 router.get(
   '/',
   validate(propertyQuerySchema, 'query'),
   propertyController.getProperties,
 );
 
-// Xem chi tiết một Property
 router.get('/:id', propertyController.getPropertyById);
 
-// ==============================
-// PROTECTED APIS (Admin or Owner)
-// ==============================
 router.use(verifyToken, isOwnerOrAdmin);
 
-// Tạo mới Property (Cho phép upload tối đa 10 ảnh)
 router.post(
   '/',
   uploadPropertyImage.array('images', 10),
@@ -37,7 +28,6 @@ router.post(
   propertyController.createProperty,
 );
 
-// Cập nhật Property (Kèm upload ảnh)
 router.put(
   '/:id',
   uploadPropertyImage.array('images', 10),
@@ -45,7 +35,6 @@ router.put(
   propertyController.updateProperty,
 );
 
-// Xóa mềm Property
 router.delete('/:id', propertyController.deleteProperty);
 
 export default router;

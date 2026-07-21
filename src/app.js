@@ -18,7 +18,6 @@ app.use(cookieParser()); // Kích hoạt Middleware để parse cookie từ requ
 app.use(methodOverride('_method')); // Kích hoạt Middleware để hỗ trợ HTTP method PUT và DELETE thông qua query parameter _method
 app.use(express.static(path.join(path.resolve(), 'public')));
 
-// 1. Cấu hình Custom cho Handlebars
 app.engine(
   'hbs',
   engine({
@@ -33,23 +32,15 @@ app.engine(
   }),
 );
 
-// 2. Báo cho Express biết hãy dùng Handlebars làm công cụ render giao diện
 app.set('view engine', 'hbs');
 
-// Báo cho Express biết thư mục chứa file giao diện tên là gì
 app.set('views', './src/views');
 
-// Phiên bản API
 const API_VERSION = '/api';
 
-// Kích hoạt router chính cho toàn bộ ứng dụng
 app.use(API_VERSION, appRouters);
 
-// THỦ THUẬT: Đặt Error Handler ở cuối cùng file
 app.use((err, req, res, _next) => {
-  // Ghi lỗi ra file log, gửi cảnh báo qua Telegram cho team... (Logic mở rộng)
-
-  // Trả thông báo lịch sự cho người dùng
   res.status(500).json({
     message: 'Hệ thống đang bảo trì, vui lòng quay lại sau!',
     errorDetails: err.message,

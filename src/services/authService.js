@@ -14,18 +14,15 @@ const register = async (
   role = 'customer',
 ) => {
   try {
-    // Normalize input
     full_name = full_name.trim();
     email = email.trim().toLowerCase();
     phone = phone.trim();
 
-    // Validate email
     const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
     if (!emailRegex.test(email)) {
       return { status: 400, message: 'Định dạng email không hợp lệ.' };
     }
 
-    // Validate password
     if (password.length < 8) {
       return {
         status: 400,
@@ -44,10 +41,8 @@ const register = async (
       };
     }
 
-    // Hash password
     const hashPassword = await bcrypt.hash(password, 10);
 
-    // Generate OTP for account activation
     const otpCode = crypto.randomInt(100000, 999999).toString();
     const expiredAt = Date.now() + 15 * 60 * 1000; // 15 minutes
 
@@ -85,7 +80,6 @@ const verifyOtp = async (email, otpCode) => {
       };
     }
 
-    // Check if OTP has expired
     if (Date.now() > pendingData.expiredAt) {
       pendingRegistrations.delete(email);
       return {
@@ -94,12 +88,10 @@ const verifyOtp = async (email, otpCode) => {
       };
     }
 
-    // Verify OTP code
     if (pendingData.otpCode !== otpCode) {
       return { status: 400, message: 'Mã OTP không hợp lệ.' };
     }
 
-    // Create user in database
     const user = await userService.createUser(
       pendingData.full_name,
       pendingData.email,
@@ -112,7 +104,6 @@ const verifyOtp = async (email, otpCode) => {
       return user;
     }
 
-    // Remove from pending registrations
     pendingRegistrations.delete(email);
 
     return {
@@ -145,7 +136,6 @@ const login = async (identifier, password) => {
       return { status: 403, message: 'Tài khoản chưa được kích hoạt' };
     }
 
-    // Generate tokens
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
@@ -156,7 +146,6 @@ const login = async (identifier, password) => {
       id: user.id,
     });
 
-    // Save refresh token to database
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
 
     const newRefreshToken = new RefreshToken({
@@ -197,7 +186,6 @@ const login = async (identifier, password) => {
 
 const refreshToken = async (token) => {
   try {
-    // Find refresh token in database
     const refreshTokenRecord = await RefreshToken.findOne({
       token,
       is_revoked: false,
@@ -210,7 +198,6 @@ const refreshToken = async (token) => {
       };
     }
 
-    // Check if token is expired
     if (new Date() > new Date(refreshTokenRecord.expires_at)) {
       return {
         status: 401,
@@ -218,11 +205,9 @@ const refreshToken = async (token) => {
       };
     }
 
-    // Revoke old token
     refreshTokenRecord.is_revoked = true;
     await refreshTokenRecord.save();
 
-    // Get user
     const user = await userService.getUserById(refreshTokenRecord.user_id);
 
     if (!user) {
@@ -240,7 +225,6 @@ const refreshToken = async (token) => {
       return { status: 403, message: 'Tài khoản chưa được kích hoạt' };
     }
 
-    // Generate new tokens
     const newAccessToken = generateAccessToken({
       id: user.id,
       email: user.email,
@@ -251,7 +235,6 @@ const refreshToken = async (token) => {
       id: user.id,
     });
 
-    // Save new refresh token
     const expiresAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000); // 7 days
     const newRefreshTokenDoc = new RefreshToken({
       user_id: user.id,

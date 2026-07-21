@@ -24,11 +24,9 @@ const updateProfile = async (req, res) => {
     const { full_name, phone, gender, dateOfBirth } = req.body;
     const updateData = { full_name, phone, gender, dateOfBirth };
 
-    // Nếu người dùng upload file mới, Multer sẽ gán URL vào req.file.path
     if (req.file) {
       updateData.avatar = req.file.path;
     } else if (req.body.avatar) {
-      // Nếu không upload file mới nhưng có truyền link url cũ (hoặc link ngoài)
       updateData.avatar = req.body.avatar;
     }
 
@@ -102,7 +100,6 @@ const toggleUserStatus = async (req, res) => {
       return sendResponse(res, 404, null, false, ['Không tìm thấy người dùng']);
     }
 
-    // Không cho phép admin tự khóa tài khoản của chính mình
     if (user._id.toString() === req.user.id) {
       return sendResponse(res, 400, null, false, [
         'Không thể tự khóa tài khoản của chính mình',
