@@ -29,7 +29,13 @@ const validate = (schema) => (req, res, next) => {
   }
 
   // Cập nhật lại request object với giá trị đã được validate
-  Object.assign(req, value);
+  ['body', 'query', 'params'].forEach((key) => {
+    if (value[key]) {
+      // Ghi đè in-place để tránh đụng độ với getter của Express
+      Object.keys(req[key]).forEach((k) => delete req[key][k]);
+      Object.assign(req[key], value[key]);
+    }
+  });
   return next();
 };
 

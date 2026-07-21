@@ -109,4 +109,9 @@ const deleteLocation = async (req, res) => {
   }
 };
 
-export { getAllLocations, createLocation, updateLocation, deleteLocation };
+export default {
+  getAllLocations,
+  createLocation,
+  updateLocation,
+  deleteLocation,
+};

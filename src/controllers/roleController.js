@@ -62,4 +62,4 @@ const deleteRole = async (req, res) => {
   }
 };
 
-export { createRole, getAllRoles, updateRole, deleteRole };
+export default { createRole, getAllRoles, updateRole, deleteRole };

@@ -6,23 +6,30 @@ import {
   updateLocationSchema,
   deleteLocationSchema,
 } from '../validations/locationValidation.js';
-import {
-  getAllLocations,
-  createLocation,
-  updateLocation,
-  deleteLocation,
-} from '../controllers/locationController.js';
+import locationController from '../controllers/locationController.js';
 
 const router = Router();
 
 // GET /api/locations: Public access (không cần verifyToken)
-router.get('/', getAllLocations);
+router.get('/', locationController.getAllLocations);
 
 // Các thao tác POST, PUT, DELETE cần quyền Admin
 router.use(verifyToken, isAdmin);
 
-router.post('/', validate(createLocationSchema), createLocation);
-router.put('/:id', validate(updateLocationSchema), updateLocation);
-router.delete('/:id', validate(deleteLocationSchema), deleteLocation);
+router.post(
+  '/',
+  validate(createLocationSchema),
+  locationController.createLocation,
+);
+router.put(
+  '/:id',
+  validate(updateLocationSchema),
+  locationController.updateLocation,
+);
+router.delete(
+  '/:id',
+  validate(deleteLocationSchema),
+  locationController.deleteLocation,
+);
 
 export default router;

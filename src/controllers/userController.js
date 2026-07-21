@@ -147,7 +147,7 @@ const deleteUser = async (req, res) => {
   }
 };
 
-export {
+export default {
   getProfile,
   updateProfile,
   updatePassword,

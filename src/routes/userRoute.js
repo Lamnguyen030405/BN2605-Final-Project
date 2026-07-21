@@ -8,14 +8,7 @@ import {
   statusSchema,
   deleteSchema,
 } from '../validations/userValidation.js';
-import {
-  getProfile,
-  updateProfile,
-  updatePassword,
-  getAllUsers,
-  toggleUserStatus,
-  deleteUser,
-} from '../controllers/userController.js';
+import userController from '../controllers/userController.js';
 
 const router = Router();
 
@@ -24,25 +17,39 @@ const router = Router();
 // ==============================
 router.use(verifyToken);
 
-router.get('/me', getProfile);
+router.get('/me', userController.getProfile);
 
 // Đã gộp chức năng upload avatar bằng form-data vào chung với cập nhật profile
 router.put(
   '/me',
-  uploadAvatar('avatar'),
+  uploadAvatar.single('avatar'),
   validate(updateProfileSchema),
-  updateProfile,
+  userController.updateProfile,
 );
 
-router.put('/me/password', validate(updatePasswordSchema), updatePassword);
+router.put(
+  '/me/password',
+  validate(updatePasswordSchema),
+  userController.updatePassword,
+);
 
 // ==============================
 // CÁC API DÀNH CHO ADMIN (Cần đăng nhập và quyền Admin)
 // ==============================
-router.get('/', isAdmin, getAllUsers);
+router.get('/', isAdmin, userController.getAllUsers);
 
-router.patch('/:id/status', isAdmin, validate(statusSchema), toggleUserStatus);
+router.patch(
+  '/:id/status',
+  isAdmin,
+  validate(statusSchema),
+  userController.toggleUserStatus,
+);
 
-router.delete('/:id', isAdmin, validate(deleteSchema), deleteUser);
+router.delete(
+  '/:id',
+  isAdmin,
+  validate(deleteSchema),
+  userController.deleteUser,
+);
 
 export default router;
