@@ -68,7 +68,7 @@ export const updatePropertySchema = {
       .try(Joi.array().items(Joi.string()), Joi.string())
       .optional(),
     isActive: Joi.boolean().optional(),
-    // Các ảnh hiện có được giữ lại (nếu gửi từ frontend lên dạng JSON string array)
+
     retained_images: Joi.alternatives()
       .try(Joi.array().items(Joi.string()), Joi.string())
       .optional(),

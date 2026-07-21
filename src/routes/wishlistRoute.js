@@ -6,7 +6,6 @@ import wishlistController from '../controllers/wishlistController.js';
 
 const router = Router();
 
-// Tất cả API Wishlist đều yêu cầu đăng nhập
 router.use(verifyToken);
 
 router.get('/', wishlistController.getMyWishlist);

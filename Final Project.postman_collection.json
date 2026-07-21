@@ -1,0 +1,2021 @@
+{
+  "info": {
+    "_postman_id": "b7097043-e70b-43cb-bb6e-f46fc280cc87",
+    "name": "Final Project",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "_exporter_id": "48743470",
+    "_collection_link": "https://go.postman.co/collection/48743470-b7097043-e70b-43cb-bb6e-f46fc280cc87?source=collection_link"
+  },
+  "item": [
+    {
+      "name": "auth",
+      "item": [
+        {
+          "name": "login",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"identifier\": \"0772944071\",\r\n    \"password\": \"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/login",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "login"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "refresh",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/refresh",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "refresh"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "logout",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/auth/logout",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "logout"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "register",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"full_name\": \"Nguyễn Trí Lâm\",\r\n    \"email\": \"nguyentrilam0304@gmail.com\",\r\n    \"phone\": \"0772944071\",\r\n    \"password\": \"12345678\",\r\n    \"role\": \"customer\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/register",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "register"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "verify-otp",
+          "request": {
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"email\": \"nguyentrilam0304@gmail.com\",\r\n    \"otpCode\": \"193036\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/auth/verify-otp",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "auth",
+                "verify-otp"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "user",
+      "item": [
+        {
+          "name": "get me",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"identifier\": \"nguyentrilam0304@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update profile",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "full_name",
+                  "value": "Nguyễn Văn A",
+                  "type": "text",
+                  "uuid": "95fb297e-a69e-41b4-8f95-99623e0024da"
+                },
+                {
+                  "key": "phone",
+                  "value": "0772944071",
+                  "type": "text",
+                  "uuid": "b07d2f34-9c34-42eb-92c1-d69b95966392"
+                },
+                {
+                  "key": "gender",
+                  "value": "male",
+                  "type": "text",
+                  "uuid": "175a5b38-f2a1-4237-8d6b-83260f365361"
+                },
+                {
+                  "key": "dateOfBirth",
+                  "value": "2005-04-03",
+                  "type": "text",
+                  "uuid": "5aa376dd-7d5d-46e5-80b7-8fa39f5aba31"
+                },
+                {
+                  "key": "avatar",
+                  "type": "file",
+                  "uuid": "eb6ee37e-5af9-4c14-a0f7-e3158e8c5d80",
+                  "src": "/C:/Users/NguyenTriLam/OneDrive/Pictures/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/me",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                "me"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "change password",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"oldPassword\": \"87654321\",\r\n    \"newPassword\": \"12345678\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/me/password",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                "me",
+                "password"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get users (admin)",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"identifier\": \"nguyentrilam0304@gmail.com\",\r\n    \"password\": \"12345678\"\r\n}"
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete user",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "user status (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"isActive\": false\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/users/{{:id}}/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "users",
+                "{{:id}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "role",
+      "item": [
+        {
+          "name": "add role (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{ \r\n    \"name\": \"owner\",\r\n    \"description\": \"123456\"\r\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/roles/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "roles",
+                ""
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "location",
+      "item": [
+        {
+          "name": "get locations",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/locations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "locations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "create loaction",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Đà Lạt\",\r\n    \"city\": \"Đà Lạt\",\r\n    \"province\": \"Lâm Đồng\",\r\n    \"country\": \"Vietnam\",\r\n    \"latitude\": 11.940419,\r\n    \"longitude\": 108.458313\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/locations",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "locations"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update location",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n    \"name\": \"Đà Lạt Mộng Mơ\",\r\n    \"latitude\": 11.95,\r\n    \"longitude\": 108.46\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/locations/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "locations",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete location",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/locations/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "locations",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "property",
+      "item": [
+        {
+          "name": "add property",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "\tKhách sạn Mường Thanh Đà Lạt",
+                  "type": "text",
+                  "uuid": "80d70840-ea8e-4188-a861-47145bce0008"
+                },
+                {
+                  "key": "location_id",
+                  "value": "6a5f02e150194bed6217d448",
+                  "type": "text",
+                  "uuid": "417e7358-43ea-4957-9dd4-8c981c28e773"
+                },
+                {
+                  "key": "type",
+                  "value": "hotel",
+                  "type": "text",
+                  "uuid": "5597fceb-28c1-45d7-9539-9fa7c00e3549"
+                },
+                {
+                  "key": "address",
+                  "value": "42 Phan Đình Phùng, Phường 2, Đà Lạt",
+                  "type": "text",
+                  "uuid": "efb28aed-b425-4ddc-9940-4efa4780aa0e"
+                },
+                {
+                  "key": "base_price",
+                  "value": "\t1200000",
+                  "type": "text",
+                  "uuid": "8931215b-a396-4a4b-b7fa-dba928398870"
+                },
+                {
+                  "key": "description",
+                  "value": "Khách sạn 4 sao view hồ Xuân Hương tuyệt đẹp",
+                  "type": "text",
+                  "uuid": "afd5caa6-02f1-4021-b0b0-cc18ea0eb802"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "8c088e5d-281c-41c1-82f6-8acf1e713bee",
+                  "src": [
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/ef0c1beb1f56e289f7836e4fa601cb62 (1).jpg",
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/macos-monterey-stock-black-dark-mode-layers-5k-3840x2160-5889.jpg",
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png"
+                  ]
+                },
+                {
+                  "key": "amenities",
+                  "value": "6a5f0405b331e2a59321662a, 6a5f0405b331e2a59321662d, 6a5f0405b331e2a59321662e",
+                  "type": "text",
+                  "uuid": "cfdb5805-d2fd-4f0d-a69d-6f7054e6fceb"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/properties",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "properties"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update property with old images",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "\tKhách sạn Mường Thanh Đà Lạt 1",
+                  "type": "text",
+                  "uuid": "80d70840-ea8e-4188-a861-47145bce0008"
+                },
+                {
+                  "key": "base_price",
+                  "value": "\t5000000",
+                  "type": "text",
+                  "uuid": "8931215b-a396-4a4b-b7fa-dba928398870"
+                },
+                {
+                  "key": "description",
+                  "value": "Khách sạn 5 sao view hồ Xuân Hương tuyệt đẹp",
+                  "type": "text",
+                  "uuid": "afd5caa6-02f1-4021-b0b0-cc18ea0eb802"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/properties/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "properties",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update property with new images",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "name",
+                  "value": "\tKhách sạn Mường Thanh Đà Lạt 1",
+                  "type": "text",
+                  "uuid": "80d70840-ea8e-4188-a861-47145bce0008"
+                },
+                {
+                  "key": "base_price",
+                  "value": "\t5000000",
+                  "type": "text",
+                  "uuid": "8931215b-a396-4a4b-b7fa-dba928398870"
+                },
+                {
+                  "key": "description",
+                  "value": "Khách sạn 5 sao view hồ Xuân Hương tuyệt đẹp",
+                  "type": "text",
+                  "uuid": "afd5caa6-02f1-4021-b0b0-cc18ea0eb802"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "0fdfc747-aa62-48aa-8499-a7f9a619e37a",
+                  "src": "/C:/Users/NguyenTriLam/OneDrive/Pictures/2brlqiowd2k61.jpg"
+                },
+                {
+                  "key": "retained_images",
+                  "value": "[\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784613967/TravelokaClone/Properties/kx1jdzrjzg4rwe25yten.jpg\",\n      \"is_primary\": true,\n      \"sort_order\": 0\n    },\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784613969/TravelokaClone/Properties/m9wadpmpt0rpmfo7vbhx.jpg\",\n      \"is_primary\": false,\n      \"sort_order\": 1\n    },\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784613969/TravelokaClone/Properties/zunendepgcdrkwjclsma.png\",\n      \"is_primary\": false,\n      \"sort_order\": 2\n    }\n  ]",
+                  "type": "text",
+                  "uuid": "027e4439-88ab-43c1-a452-226e92dab131"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/properties/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "properties",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get detail property",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": []
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/properties/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "properties",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get filter properties",
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          },
+          "request": {
+            "method": "GET",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "/api/properties?type=resort&location_id=6a5f02e150194bed6217d448\r\n/api/properties?page=1&limit=5\r\n/api/properties?min_price=500000&max_price=2000000&sort_by=price_asc\r\n/api/properties?min_price=500000&max_price=2000000&sort_by=price_desc",
+              "options": {
+                "raw": {
+                  "language": "text"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/properties?page=1&limit=5",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "properties"
+              ],
+              "query": [
+                {
+                  "key": "page",
+                  "value": "1"
+                },
+                {
+                  "key": "limit",
+                  "value": "5"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "room",
+      "item": [
+        {
+          "name": "get rooms by property",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/rooms/property/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "rooms",
+                "property",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get room by id",
+          "request": {
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/rooms/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "rooms",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add new room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "property_id",
+                  "value": "6a5f0c511e45064e2b893a03",
+                  "type": "text",
+                  "uuid": "dd069d13-7681-4dc4-be5d-f22e85ae93fb"
+                },
+                {
+                  "key": "room_type",
+                  "value": "Deluxe Ocean View",
+                  "type": "text",
+                  "uuid": "3349d370-757b-4cbc-a346-2e147d5827b2"
+                },
+                {
+                  "key": "price_per_night",
+                  "value": "\t1500000",
+                  "type": "text",
+                  "uuid": "18253cf0-08dc-4bfc-adbe-f2d2bb731a4e"
+                },
+                {
+                  "key": "room_number",
+                  "value": "A-102",
+                  "type": "text",
+                  "uuid": "4cc9e22c-7bef-4292-bb9d-ed6bc6cc3f26"
+                },
+                {
+                  "key": "description",
+                  "value": "Phòng rộng 45m2, có ban công nhìn ra biển.",
+                  "type": "text",
+                  "uuid": "3409fe45-e7e2-4653-9dfe-b0a8f8263601"
+                },
+                {
+                  "key": "max_guests",
+                  "value": "3",
+                  "type": "text",
+                  "uuid": "2d3c1920-a3f2-4e7f-9090-b4a3a3c271c7"
+                },
+                {
+                  "key": "bed_type",
+                  "value": "1 King Bed",
+                  "type": "text",
+                  "uuid": "72c9f19f-d8c9-4c8a-97c5-c715ff546cac"
+                },
+                {
+                  "key": "floor",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "d29e93a7-6e93-414f-ad64-3620a17f28b2"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "43758f59-299d-484f-93a2-aefbcc76cd13",
+                  "src": [
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/ef0c1beb1f56e289f7836e4fa601cb62 (1).jpg",
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/macos-monterey-stock-black-dark-mode-layers-5k-3840x2160-5889.jpg",
+                    "/C:/Users/NguyenTriLam/OneDrive/Pictures/windows-11-dark-mode-abstract-background-black-background-3840x2160-8710.png"
+                  ]
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/rooms",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "rooms"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "formdata",
+              "formdata": [
+                {
+                  "key": "property_id",
+                  "value": "6a5f0c511e45064e2b893a03",
+                  "type": "text",
+                  "uuid": "dd069d13-7681-4dc4-be5d-f22e85ae93fb"
+                },
+                {
+                  "key": "price_per_night",
+                  "value": "\t1500000",
+                  "type": "text",
+                  "uuid": "18253cf0-08dc-4bfc-adbe-f2d2bb731a4e"
+                },
+                {
+                  "key": "room_number",
+                  "value": "A-102",
+                  "type": "text",
+                  "uuid": "4cc9e22c-7bef-4292-bb9d-ed6bc6cc3f26"
+                },
+                {
+                  "key": "max_guests",
+                  "value": "2",
+                  "type": "text",
+                  "uuid": "2d3c1920-a3f2-4e7f-9090-b4a3a3c271c7"
+                },
+                {
+                  "key": "floor",
+                  "value": "1",
+                  "type": "text",
+                  "uuid": "d29e93a7-6e93-414f-ad64-3620a17f28b2"
+                },
+                {
+                  "key": "images",
+                  "type": "file",
+                  "uuid": "43758f59-299d-484f-93a2-aefbcc76cd13",
+                  "src": "/C:/Users/NguyenTriLam/OneDrive/Pictures/2brlqiowd2k61.jpg"
+                },
+                {
+                  "key": "retained_images",
+                  "value": "[\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784619691/TravelokaClone/Rooms/of21joeignnndw1jgipv.jpg\",\n      \"is_primary\": true,\n      \"sort_order\": 0\n    },\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784619712/TravelokaClone/Rooms/iaf6lkl3segjjiwwslgn.jpg\",\n      \"is_primary\": false,\n      \"sort_order\": 1\n    },\n    {\n      \"url\": \"https://res.cloudinary.com/dirk8jzyj/image/upload/v1784619729/TravelokaClone/Rooms/fgs4rr3v9vfdfuolxsnx.png\",\n      \"is_primary\": false,\n      \"sort_order\": 2\n    }\n  ]",
+                  "type": "text",
+                  "uuid": "8bdee1fc-e90e-4f4a-907b-6935461dc5ae"
+                }
+              ]
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/rooms/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "rooms",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete room",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/rooms/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "rooms",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "ticket",
+      "item": [
+        {
+          "name": "get tickets by property",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/tickets/property/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "tickets",
+                "property",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get detail ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/tickets/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "tickets",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add new ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"property_id\": \"6a5e52114416e01217eceae1\",\r\n  \"name\": \"Vé vào cổng (Người lớn)\",\r\n  \"price\": 500000,\r\n  \"description\": \"Vé trọn gói chơi tất cả các trò chơi trong công viên nước.\",\r\n  \"quota_per_day\": 500,\r\n  \"valid_days\": 1,\r\n  \"isActive\": true\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/tickets",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "tickets"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PUT",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"price\": 450000,\r\n  \"description\": \"Giá vé vừa được khuyến mãi giảm.\",\r\n  \"quota_per_day\": 800\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/tickets/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "tickets",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete ticket",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/tickets/{{id}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "tickets",
+                "{{id}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "booking",
+      "item": [
+        {
+          "name": "add new room booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"property_id\": \"6a5e52114416e01217eceae1\",\r\n  \"booking_type\": \"hotel\",\r\n  \"check_in\": \"2026-07-25\",\r\n  \"check_out\": \"2026-07-27\",\r\n  \"guests\": 2,\r\n  \"payment_method\": \"cash\",\r\n  \"rooms\": [\r\n    {\r\n      \"room_id\": \"6a5f1a77186c043d75157f42\",\r\n      \"nights\": 2\r\n    }\r\n  ],\r\n  \"special_requests\": \"Cho tôi phòng tầng cao, view biển\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add new ticket booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"property_id\": \"6a5e52114416e01217eceae4\",\r\n  \"booking_type\": \"attraction\",\r\n  \"check_in\": \"2026-07-30\",\r\n  \"payment_method\": \"e_wallet\",\r\n  \"tickets\": [\r\n    {\r\n      \"ticket_id\": \"6a5f2712bdfc71dd88bb1eec\",\r\n      \"visit_date\": \"2026-07-30\",\r\n      \"quantity\": 3\r\n    }\r\n  ]\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                ""
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get my booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/my-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "my-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "cancel booking",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/{{bookingId}}/cancel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "{{bookingId}}",
+                "cancel"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get owner booking (owner)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/owner-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "owner-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update booking status (owner)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"completed\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/{{bookingId}}/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "{{bookingId}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all booking (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/admin-bookings",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "admin-bookings"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get booking by id",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/{{bookingId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "{{bookingId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get all booking with filter (admin)",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/bookings/admin-bookings?booking_type=hotel",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "bookings",
+                "admin-bookings"
+              ],
+              "query": [
+                {
+                  "key": "booking_type",
+                  "value": "hotel"
+                }
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "review",
+      "item": [
+        {
+          "name": "add review",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"booking_id\": \"6a5f3725d019a11def831cf1\",\r\n  \"overall_score\": 8,\r\n  \"comment\": \"Chỗ ở rất tốt, giá hợp lý!\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add review with full score",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"booking_id\": \"6a5f3725d019a11def831cf1\",\r\n  \"cleanliness_score\": 10,\r\n  \"service_score\": 9,\r\n  \"location_score\": 8,\r\n  \"comment\": \"Sạch sẽ tuyệt đối nhưng vị trí hơi xa.\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/reviews",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "reviews"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "get property reviews",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/reviews/property/{{propertyId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "reviews",
+                "property",
+                "{{propertyId}}"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "reply to review",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"content\": \"Dạ em cảm ơn anh/chị rất nhiều vì đã ủng hộ, hy vọng gặp lại anh chị lần sau!\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/reviews/{{reviewId}}/reply",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "reviews",
+                "{{reviewId}}",
+                "reply"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "update review status",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "PATCH",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"status\": \"hidden\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/reviews/{{reviewId}}/status",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "reviews",
+                "{{reviewId}}",
+                "status"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "amenity",
+      "item": [
+        {
+          "name": "get all amentities",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/amenities",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "amenities"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add new amentity",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"name\": \"Hồ bơi vô cực\",\r\n  \"icon\": \"fa-swimming-pool\",\r\n  \"category\": \"facility\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/amenities",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "amenities"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    },
+    {
+      "name": "wishlist",
+      "item": [
+        {
+          "name": "get my wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "GET",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/wishlists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "wishlists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "add to wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "POST",
+            "header": [],
+            "body": {
+              "mode": "raw",
+              "raw": "{\r\n  \"property_id\": \"6a5e52114416e01217eceae1\"\r\n}\r\n",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            },
+            "url": {
+              "raw": "http://localhost:8080/api/wishlists",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "wishlists"
+              ]
+            }
+          },
+          "response": []
+        },
+        {
+          "name": "delete from wishlist",
+          "request": {
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{access_token}}",
+                  "type": "string"
+                }
+              ]
+            },
+            "method": "DELETE",
+            "header": [],
+            "url": {
+              "raw": "http://localhost:8080/api/wishlists/{{propertyId}}",
+              "protocol": "http",
+              "host": [
+                "localhost"
+              ],
+              "port": "8080",
+              "path": [
+                "api",
+                "wishlists",
+                "{{propertyId}}"
+              ]
+            }
+          },
+          "response": []
+        }
+      ]
+    }
+  ]
+}

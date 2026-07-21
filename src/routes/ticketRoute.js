@@ -9,15 +9,9 @@ import ticketController from '../controllers/ticketController.js';
 
 const router = Router();
 
-// ==============================
-// PUBLIC APIS
-// ==============================
 router.get('/property/:propertyId', ticketController.getTicketsByPropertyId);
 router.get('/:id', ticketController.getTicketById);
 
-// ==============================
-// PROTECTED APIS (Admin or Owner)
-// ==============================
 router.use(verifyToken, isOwnerOrAdmin);
 
 router.post('/', validate(createTicketSchema), ticketController.createTicket);

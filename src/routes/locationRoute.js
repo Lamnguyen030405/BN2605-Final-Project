@@ -10,10 +10,8 @@ import locationController from '../controllers/locationController.js';
 
 const router = Router();
 
-// GET /api/locations: Public access (không cần verifyToken)
 router.get('/', locationController.getAllLocations);
 
-// Các thao tác POST, PUT, DELETE cần quyền Admin
 router.use(verifyToken, isAdmin);
 
 router.post(

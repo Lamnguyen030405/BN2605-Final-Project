@@ -13,15 +13,12 @@ const getMyWishlist = async (userId) => {
 };
 
 const addToWishlist = async (propertyId, userId) => {
-  // Check nếu property tồn tại
   const property = await Property.findOne({
     _id: propertyId,
     isDeleted: false,
   });
   if (!property) throw new Error('Không tìm thấy cơ sở lưu trú');
 
-  // Do model có compound index {user_id, property_id} unique: true
-  // Nên cần check trước hoặc bắt lỗi duplicate
   const existing = await Wishlist.findOne({
     user_id: userId,
     property_id: propertyId,

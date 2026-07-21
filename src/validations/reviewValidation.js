@@ -26,7 +26,6 @@ export const createReviewSchema = Joi.object({
     value_score,
   } = value;
 
-  // Nếu có bất kỳ điểm thành phần nào, không cần overall_score
   const hasSubScore =
     cleanliness_score || service_score || location_score || value_score;
 

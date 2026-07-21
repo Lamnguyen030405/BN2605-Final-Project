@@ -33,27 +33,25 @@ const getAllProperties = async (queryParams) => {
   }
 
   if (amenities) {
-    // amenities có thể là dạng chuỗi 'id1,id2'
     const amenityArray = amenities.split(',').map((id) => id.trim());
     filter.amenities = { $all: amenityArray }; // Tìm property có TẤT CẢ các amenities này
   }
 
-  // Cấu hình Sort
   const sortOption = {};
   switch (sort_by) {
-  case 'price_asc':
-    sortOption.base_price = 1;
-    break;
-  case 'price_desc':
-    sortOption.base_price = -1;
-    break;
-  case 'rating_desc':
-    sortOption.avg_rating = -1;
-    break;
-  case 'newest':
-  default:
-    sortOption.created_at = -1;
-    break;
+    case 'price_asc':
+      sortOption.base_price = 1;
+      break;
+    case 'price_desc':
+      sortOption.base_price = -1;
+      break;
+    case 'rating_desc':
+      sortOption.avg_rating = -1;
+      break;
+    case 'newest':
+    default:
+      sortOption.created_at = -1;
+      break;
   }
 
   const skip = (Number(page) - 1) * Number(limit);
@@ -108,7 +106,6 @@ const updateProperty = async (id, data, userId, userRole) => {
     return null; // Not found
   }
 
-  // Data Ownership Validation
   if (userRole !== 'admin' && property.owner_id.toString() !== userId) {
     throw new Error('Bạn không có quyền cập nhật tài sản này');
   }
@@ -131,7 +128,6 @@ const deleteProperty = async (id, userId, userRole) => {
     return null; // Not found
   }
 
-  // Data Ownership Validation
   if (userRole !== 'admin' && property.owner_id.toString() !== userId) {
     throw new Error('Bạn không có quyền xóa tài sản này');
   }

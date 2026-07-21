@@ -13,7 +13,6 @@ const login = async (req, res) => {
   try {
     const response = await authService.login(identifier, password);
 
-    // Lưu refreshToken vào cookie httpOnly từ HEAD
     if (response.status === 200 && response.data?.refreshToken) {
       res.cookie('refreshToken', response.data.refreshToken, {
         httpOnly: true,

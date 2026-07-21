@@ -33,7 +33,6 @@ const wishlistSchema = new mongoose.Schema(
   },
 );
 
-// Tạo Compound Index để đảm bảo 1 User chỉ lưu 1 Property 1 lần[cite: 3]
 wishlistSchema.index({ user_id: 1, property_id: 1 }, { unique: true });
 
 export const Wishlist = mongoose.model('Wishlist', wishlistSchema);
