@@ -1,5 +1,5 @@
 import { Router } from 'express';
-import { verifyToken } from '../middlewares/auth.js';
+import { verifyToken, isOwnerOrAdmin } from '../middlewares/auth.js';
 import { validate } from '../middlewares/validate.js';
 import { uploadPropertyImage } from '../middlewares/upload.js';
 import {
@@ -27,7 +27,7 @@ router.get('/:id', propertyController.getPropertyById);
 // ==============================
 // PROTECTED APIS (Admin or Owner)
 // ==============================
-router.use(verifyToken);
+router.use(verifyToken, isOwnerOrAdmin);
 
 // Tạo mới Property (Cho phép upload tối đa 10 ảnh)
 router.post(

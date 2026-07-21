@@ -32,13 +32,17 @@ const getUserByEmailOrPhone = async (identifier) => {
   const user = await User.findOne({
     $or: [{ email: identifier }, { phone: identifier }],
     isDeleted: false,
-  }).lean();
+  })
+    .populate('role')
+    .lean();
 
   return mongooseToObject(user);
 };
 
 const getUserById = async (id) => {
-  const user = await User.findOne({ _id: id, isDeleted: false }).lean();
+  const user = await User.findOne({ _id: id, isDeleted: false })
+    .populate('role')
+    .lean();
   return mongooseToObject(user);
 };
 

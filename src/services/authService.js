@@ -149,7 +149,7 @@ const login = async (identifier, password) => {
     const accessToken = generateAccessToken({
       id: user.id,
       email: user.email,
-      role_id: user.role_id,
+      role: { role_name: user.role?.name },
     });
 
     const refreshToken = generateRefreshToken({
@@ -168,9 +168,9 @@ const login = async (identifier, password) => {
     await newRefreshToken.save();
 
     let redirectUrl = '/';
-    if (user.role_id === 1 || user.role?.role_name === 'admin') {
+    if (user.role_id === 1 || user.role?.name === 'admin') {
       redirectUrl = '/admin';
-    } else if (user.role_id === 2 || user.role?.role_name === 'owner') {
+    } else if (user.role_id === 2 || user.role?.name === 'owner') {
       redirectUrl = '/owner';
     }
     return {
@@ -184,7 +184,7 @@ const login = async (identifier, password) => {
           full_name: user.full_name,
           email: user.email,
           phone: user.phone,
-          role: user.role?.role_name || 'customer',
+          role: user.role?.name || 'customer',
         },
         redirectUrl,
       },
@@ -244,7 +244,7 @@ const refreshToken = async (token) => {
     const newAccessToken = generateAccessToken({
       id: user.id,
       email: user.email,
-      role_id: user.role_id,
+      role: { role_name: user.role?.name },
     });
 
     const newRefreshToken = generateRefreshToken({

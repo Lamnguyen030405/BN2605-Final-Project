@@ -51,14 +51,14 @@ app.use((err, req, res, _next) => {
 
   // Trả thông báo lịch sự cho người dùng
   res.status(500).json({
-    thongBao: 'Hệ thống đang bảo trì, vui lòng quay lại sau!',
-    chiTietLoi: err.message,
+    message: 'Hệ thống đang bảo trì, vui lòng quay lại sau!',
+    errorDetails: err.message,
   });
 });
 
 app.use((req, res) => {
   res.status(404).json({
-    thongBao: 'Không tìm thấy API bạn đang yêu cầu!',
+    message: 'Không tìm thấy API bạn đang yêu cầu!',
   });
 });
 

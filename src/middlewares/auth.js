@@ -60,4 +60,5 @@ const checkRole = (allowedRoles) => async (req, res, next) => {
 };
 
 export const isOwner = checkRole(['owner']);
-export const isAdmin = checkRole(['admin', 'owner']);
+export const isAdmin = checkRole(['admin']);
+export const isOwnerOrAdmin = checkRole(['admin', 'owner']);
