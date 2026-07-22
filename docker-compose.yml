@@ -1,0 +1,20 @@
+version: '3.8'
+
+services:
+  app:
+    # Tên của container khi chạy
+    container_name: travel_booking_app
+    
+    # Chỉ định thư mục build chứa Dockerfile (chính là thư mục hiện tại)
+    build: .
+    
+    # Map port 8080 của máy tính sang port 8080 của container
+    ports:
+      - "8080:8080"
+    
+    # Trỏ đến file .env ở môi trường thật để nhét cấu hình vào trong Container
+    env_file:
+      - .env
+    
+    # Tự động khởi động lại nếu app bị crash
+    restart: unless-stopped

@@ -10,5 +10,5 @@ COPY . .
 FROM node:24-alpine AS production
 WORKDIR /app
 COPY --from=build /app .
-EXPOSE 3000
-CMD ["node", "src/index.js"]
+EXPOSE 8080
+CMD ["node", "src/app.js"]

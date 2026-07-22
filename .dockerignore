@@ -1,14 +1,24 @@
-node_modules
-Dockerfile
-.dockerignore
-build/
-dist/
-out/
-.cache/
-*.log
-.git
+# Bỏ qua thư mục chứa thư viện (vì trong Docker sẽ chạy npm install riêng)
+node_modules/
+
+# Bỏ qua các thư mục sinh ra khi test
+coverage/
+tests/
+jest.config.js
+eslint.config.js
+.prettierrc
+
+# Bỏ qua git
+.git/
 .gitignore
+
+# Bỏ qua các file không cần thiết cho production
+scratch/
 README.md
+plan.md
+task.md
+walkthrough.md
+
+# KHÔNG copy trực tiếp .env vào trong Image vì lý do bảo mật
 .env
-.vscode/
-.npmrc
+.env.*
