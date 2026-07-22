@@ -57,6 +57,4 @@ connectDB(); // Kết nối tới MongoDB Atlas trước khi khởi động serv
 
 const port = process.env.PORT || 3000;
 
-app.listen(port, () => {
-  console.log(`Server is running on port ${port}`);
-});
+app.listen(port, () => {});

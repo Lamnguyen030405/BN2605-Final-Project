@@ -1,7 +1,6 @@
 import nodemailer from 'nodemailer';
 
 const createTransporter = () => {
-  console.log('Creating email transporter with user:', process.env.MAIL_USER);
   return nodemailer.createTransport({
     host: process.env.MAIL_HOST || 'smtp.gmail.com',
     port: parseInt(process.env.MAIL_PORT || '587'),
@@ -18,8 +17,6 @@ const createTransporter = () => {
 
 const sendRegistrationOtp = async (toEmail, otpCode) => {
   const transporter = createTransporter();
-
-  console.log(`Nodemailer attempting to send to: ${toEmail}`);
 
   await transporter.sendMail({
     from: `"${process.env.MAIL_FROM_NAME || 'Support Team'}" <${process.env.MAIL_USER}>`,
